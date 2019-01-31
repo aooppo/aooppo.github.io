@@ -14,25 +14,25 @@
     
     
     
-    <title>Docker常用命令及使用 | TJ&#39;s blog</title>
+    <title>docker alias | TJ&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="docker,shell">
-    <meta name="description" content="以下是在 centos 系统下执行  sudo yum install -y yum-utils device-mapper-persistent-data lvm2  sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo  sudo yum makecache">
-<meta name="keywords" content="docker,shell">
+    <meta name="keywords" content="shell">
+    <meta name="description" content="Docker alias and functionGet latest container ID alias dl=&amp;quot;docker ps -l -q&amp;quot;  Get container process alias dps=&amp;quot;docker ps&amp;quot;  Get process included stop container alias dpa=&amp;quot;docke">
+<meta name="keywords" content="shell">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker常用命令及使用">
-<meta property="og:url" content="https://voox.cc/2019/01/31/Docker常用命令及使用/index.html">
+<meta property="og:title" content="docker alias">
+<meta property="og:url" content="https://voox.cc/2018/02/11/docker-alias/index.html">
 <meta property="og:site_name" content="TJ&#39;s blog">
-<meta property="og:description" content="以下是在 centos 系统下执行  sudo yum install -y yum-utils device-mapper-persistent-data lvm2  sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo  sudo yum makecache">
+<meta property="og:description" content="Docker alias and functionGet latest container ID alias dl=&amp;quot;docker ps -l -q&amp;quot;  Get container process alias dps=&amp;quot;docker ps&amp;quot;  Get process included stop container alias dpa=&amp;quot;docke">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-31T06:02:57.179Z">
+<meta property="og:updated_time" content="2019-01-31T06:08:39.712Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker常用命令及使用">
-<meta name="twitter:description" content="以下是在 centos 系统下执行  sudo yum install -y yum-utils device-mapper-persistent-data lvm2  sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo  sudo yum makecache">
+<meta name="twitter:title" content="docker alias">
+<meta name="twitter:description" content="Docker alias and functionGet latest container ID alias dl=&amp;quot;docker ps -l -q&amp;quot;  Get container process alias dps=&amp;quot;docker ps&amp;quot;  Get process included stop container alias dpa=&amp;quot;docke">
     
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
@@ -111,7 +111,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Docker常用命令及使用</div>
+        <div class="flex-col header-title ellipsis">docker alias</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -133,11 +133,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Docker常用命令及使用</h1>
+        <h1 class="title">docker alias</h1>
         <h5 class="subtitle">
             
-                <time datetime="2019-01-31T05:45:18.000Z" itemprop="datePublished" class="page-time">
-  2019-01-31
+                <time datetime="2018-02-11T06:07:03.000Z" itemprop="datePublished" class="page-time">
+  2018-02-11
 </time>
 
 
@@ -153,13 +153,20 @@
 
 <div class="container body-wrap">
     
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Docker-alias-and-function"><span class="post-toc-number">1.</span> <span class="post-toc-text">Docker alias and function</span></a></li></ol>
+        </nav>
+    </aside>
 
-<article id="post-Docker常用命令及使用" class="post-article article-type-post fade" itemprop="blogPost">
+
+<article id="post-docker-alias" class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Docker常用命令及使用</h1>
+        <h1 class="post-card-title">docker alias</h1>
         <div class="post-meta">
-            <time class="post-time" title="2019-01-31 13:45:18" datetime="2019-01-31T05:45:18.000Z" itemprop="datePublished">2019-01-31</time>
+            <time class="post-time" title="2018-02-11 14:07:03" datetime="2018-02-11T06:07:03.000Z" itemprop="datePublished">2018-02-11</time>
 
             
 
@@ -168,30 +175,51 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>以下是在 centos 系统下执行</p>
-<pre><code class="sh">
-sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+            <hr>
+<h2 id="Docker-alias-and-function"><a href="#Docker-alias-and-function" class="headerlink" title="Docker alias and function"></a>Docker alias and function</h2><pre><code class="sh">Get latest container ID
+alias dl=&quot;docker ps -l -q&quot;
 
-sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo
+Get container process
+alias dps=&quot;docker ps&quot;
 
-sudo yum makecache fast
+Get process included stop container
+alias dpa=&quot;docker ps -a&quot;
 
-sudo yum install docker-ce
+Get images
+alias di=&quot;docker images&quot;
 
-vi /etc/docker/daemon.json
+Get container IP
+alias dip=&quot;docker inspect --format &#39;{{ .NetworkSettings.IPAddress }}&#39;&quot;
 
-{
-  &quot;registry-mirrors&quot; : [
-    &quot;https://xxxx.mirror.aliyuncs.com&quot;
-  ],
-  &quot;insecure-registries&quot; : [
-    &quot;registry.mirrors.aliyuncs.com&quot;
-  ],
-  &quot;debug&quot; : true,
-  &quot;experimental&quot; : true
-}
-sudo systemctl start docker
+Run deamonized container, e.g., $dkd base /bin/echo hello
+alias dkd=&quot;docker run -d -P&quot;
 
+Run interactive container, e.g., $dki base /bin/bash
+alias dki=&quot;docker run -i -t -P&quot;
+
+Execute interactive container, e.g., $dex base /bin/bash
+alias dex=&quot;docker exec -i -t&quot;
+
+Stop all containers
+dstop() { docker stop $(docker ps -a -q); }
+
+Remove all containers
+drm() { docker rm $(docker ps -a -q); }
+
+Stop and Remove all containers
+alias drmf=&#39;docker stop $(docker ps -a -q) &amp;&amp; docker rm $(docker ps -a -q)&#39;
+
+Remove all images
+dri() { docker rmi $(docker images -q); }
+
+Dockerfile build, e.g., $dbu tcnksm/test
+dbu() { docker build -t=$1 .; }
+
+Show all alias related docker
+dalias() { alias | grep &#39;docker&#39; | sed &quot;s/^([^=])=(.)/\1 =&gt; \2/&quot;| sed &quot;s/[&#39;|&#39;]//g&quot; | sort; }
+
+Bash into running container
+dbash() { docker exec -it $(docker ps -aqf &quot;name=$1&quot;) bash; }
 </code></pre>
 
         </div>
@@ -201,12 +229,12 @@ sudo systemctl start docker
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-01-31T06:02:57.179Z" itemprop="dateUpdated">2019-01-31 14:02:57</time>
+    最后更新时间：<time datetime="2019-01-31T06:08:39.712Z" itemprop="dateUpdated">2019-01-31 14:08:39</time>
 </span><br>
 
 
         
-        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2019/01/31/Docker常用命令及使用/" target="_blank" rel="external">https://voox.cc/2019/01/31/Docker常用命令及使用/</a>
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2018/02/11/docker-alias/" target="_blank" rel="external">https://voox.cc/2018/02/11/docker-alias/</a>
         
     </div>
     
@@ -223,7 +251,7 @@ sudo systemctl start docker
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
 
 
             
@@ -233,7 +261,7 @@ sudo systemctl start docker
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://voox.cc/2019/01/31/Docker常用命令及使用/&title=《Docker常用命令及使用》 — TJ's blog&pic=https://voox.cc/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://voox.cc/2018/02/11/docker-alias/&title=《docker alias》 — TJ's blog&pic=https://voox.cc/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -243,22 +271,22 @@ sudo systemctl start docker
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://voox.cc/2019/01/31/Docker常用命令及使用/&title=《Docker常用命令及使用》 — TJ's blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://voox.cc/2018/02/11/docker-alias/&title=《docker alias》 — TJ's blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://voox.cc/2019/01/31/Docker常用命令及使用/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://voox.cc/2018/02/11/docker-alias/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Docker常用命令及使用》 — TJ's blog&url=https://voox.cc/2019/01/31/Docker常用命令及使用/&via=https://voox.cc" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《docker alias》 — TJ's blog&url=https://voox.cc/2018/02/11/docker-alias/&via=https://voox.cc" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://voox.cc/2019/01/31/Docker常用命令及使用/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://voox.cc/2018/02/11/docker-alias/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -281,18 +309,18 @@ sudo systemctl start docker
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2019/01/31/docker-alias/" id="post-prev" class="post-nav-link">
+      <a href="/2018/08/08/Docker中exec和attach区别/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">docker alias</h4>
+        <h4 class="title">Docker中exec和attach区别</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/08/08/Docker中exec和attach区别/" id="post-next" class="post-nav-link">
+      <a href="/2017/11/20/Docker常用命令及使用/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Docker中exec和attach区别</h4>
+        <h4 class="title">Docker常用命令及使用</h4>
       </a>
     </div>
   
@@ -382,7 +410,7 @@ sudo systemctl start docker
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://voox.cc/2019/01/31/Docker常用命令及使用/&title=《Docker常用命令及使用》 — TJ's blog&pic=https://voox.cc/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://voox.cc/2018/02/11/docker-alias/&title=《docker alias》 — TJ's blog&pic=https://voox.cc/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -392,22 +420,22 @@ sudo systemctl start docker
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://voox.cc/2019/01/31/Docker常用命令及使用/&title=《Docker常用命令及使用》 — TJ's blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://voox.cc/2018/02/11/docker-alias/&title=《docker alias》 — TJ's blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://voox.cc/2019/01/31/Docker常用命令及使用/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://voox.cc/2018/02/11/docker-alias/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Docker常用命令及使用》 — TJ's blog&url=https://voox.cc/2019/01/31/Docker常用命令及使用/&via=https://voox.cc" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《docker alias》 — TJ's blog&url=https://voox.cc/2018/02/11/docker-alias/&via=https://voox.cc" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://voox.cc/2019/01/31/Docker常用命令及使用/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://voox.cc/2018/02/11/docker-alias/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -418,7 +446,7 @@ sudo systemctl start docker
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://voox.cc/2019/01/31/Docker常用命令及使用/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://voox.cc/2018/02/11/docker-alias/" alt="微信分享二维码">
 </div>
 
 
