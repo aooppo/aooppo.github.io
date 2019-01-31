@@ -14,25 +14,25 @@
     
     
     
-    <title>Docker alias | TJ&#39;s blog</title>
+    <title>Docker alias | TJ&#39;s blog | 关于技术 关于生活</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content="shell">
-    <meta name="description" content="Docker alias and functionGet latest container ID alias dl=&amp;quot;docker ps -l -q&amp;quot;  Get container process alias dps=&amp;quot;docker ps&amp;quot;  Get process included stop container alias dpa=&amp;quot;docke">
+    <meta name="description" content="Docker alias and functionGet latest container IDalias dl=&quot;docker ps -l -q&quot;Get container processalias dps=&quot;docker ps&quot;Get process included stop containeralias dpa=&quot;docker ps -a&quot;Get imagesalias di=&quot;dock">
 <meta name="keywords" content="shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker alias">
 <meta property="og:url" content="https://voox.cc/2018/02/11/docker-alias/index.html">
 <meta property="og:site_name" content="TJ&#39;s blog">
-<meta property="og:description" content="Docker alias and functionGet latest container ID alias dl=&amp;quot;docker ps -l -q&amp;quot;  Get container process alias dps=&amp;quot;docker ps&amp;quot;  Get process included stop container alias dpa=&amp;quot;docke">
+<meta property="og:description" content="Docker alias and functionGet latest container IDalias dl=&quot;docker ps -l -q&quot;Get container processalias dps=&quot;docker ps&quot;Get process included stop containeralias dpa=&quot;docker ps -a&quot;Get imagesalias di=&quot;dock">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-01-31T06:14:34.507Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker alias">
-<meta name="twitter:description" content="Docker alias and functionGet latest container ID alias dl=&amp;quot;docker ps -l -q&amp;quot;  Get container process alias dps=&amp;quot;docker ps&amp;quot;  Get process included stop container alias dpa=&amp;quot;docke">
+<meta name="twitter:description" content="Docker alias and functionGet latest container IDalias dl=&quot;docker ps -l -q&quot;Get container processalias dps=&quot;docker ps&quot;Get process included stop containeralias dpa=&quot;docker ps -a&quot;Get imagesalias di=&quot;dock">
     
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
@@ -176,51 +176,7 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <hr>
-<h2 id="Docker-alias-and-function"><a href="#Docker-alias-and-function" class="headerlink" title="Docker alias and function"></a>Docker alias and function</h2><pre><code class="sh">Get latest container ID
-alias dl=&quot;docker ps -l -q&quot;
-
-Get container process
-alias dps=&quot;docker ps&quot;
-
-Get process included stop container
-alias dpa=&quot;docker ps -a&quot;
-
-Get images
-alias di=&quot;docker images&quot;
-
-Get container IP
-alias dip=&quot;docker inspect --format &#39;{{ .NetworkSettings.IPAddress }}&#39;&quot;
-
-Run deamonized container, e.g., $dkd base /bin/echo hello
-alias dkd=&quot;docker run -d -P&quot;
-
-Run interactive container, e.g., $dki base /bin/bash
-alias dki=&quot;docker run -i -t -P&quot;
-
-Execute interactive container, e.g., $dex base /bin/bash
-alias dex=&quot;docker exec -i -t&quot;
-
-Stop all containers
-dstop() { docker stop $(docker ps -a -q); }
-
-Remove all containers
-drm() { docker rm $(docker ps -a -q); }
-
-Stop and Remove all containers
-alias drmf=&#39;docker stop $(docker ps -a -q) &amp;&amp; docker rm $(docker ps -a -q)&#39;
-
-Remove all images
-dri() { docker rmi $(docker images -q); }
-
-Dockerfile build, e.g., $dbu tcnksm/test
-dbu() { docker build -t=$1 .; }
-
-Show all alias related docker
-dalias() { alias | grep &#39;docker&#39; | sed &quot;s/^([^=])=(.)/\1 =&gt; \2/&quot;| sed &quot;s/[&#39;|&#39;]//g&quot; | sort; }
-
-Bash into running container
-dbash() { docker exec -it $(docker ps -aqf &quot;name=$1&quot;) bash; }
-</code></pre>
+<h2 id="Docker-alias-and-function"><a href="#Docker-alias-and-function" class="headerlink" title="Docker alias and function"></a>Docker alias and function</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">Get latest container ID</span><br><span class="line"><span class="built_in">alias</span> dl=<span class="string">"docker ps -l -q"</span></span><br><span class="line"></span><br><span class="line">Get container process</span><br><span class="line"><span class="built_in">alias</span> dps=<span class="string">"docker ps"</span></span><br><span class="line"></span><br><span class="line">Get process included stop container</span><br><span class="line"><span class="built_in">alias</span> dpa=<span class="string">"docker ps -a"</span></span><br><span class="line"></span><br><span class="line">Get images</span><br><span class="line"><span class="built_in">alias</span> di=<span class="string">"docker images"</span></span><br><span class="line"></span><br><span class="line">Get container IP</span><br><span class="line"><span class="built_in">alias</span> dip=<span class="string">"docker inspect --format '&#123;&#123; .NetworkSettings.IPAddress &#125;&#125;'"</span></span><br><span class="line"></span><br><span class="line">Run deamonized container, e.g., <span class="variable">$dkd</span> base /bin/<span class="built_in">echo</span> hello</span><br><span class="line"><span class="built_in">alias</span> dkd=<span class="string">"docker run -d -P"</span></span><br><span class="line"></span><br><span class="line">Run interactive container, e.g., <span class="variable">$dki</span> base /bin/bash</span><br><span class="line"><span class="built_in">alias</span> dki=<span class="string">"docker run -i -t -P"</span></span><br><span class="line"></span><br><span class="line">Execute interactive container, e.g., <span class="variable">$dex</span> base /bin/bash</span><br><span class="line"><span class="built_in">alias</span> dex=<span class="string">"docker exec -i -t"</span></span><br><span class="line"></span><br><span class="line">Stop all containers</span><br><span class="line"><span class="function"><span class="title">dstop</span></span>() &#123; docker stop $(docker ps -a -q); &#125;</span><br><span class="line"></span><br><span class="line">Remove all containers</span><br><span class="line"><span class="function"><span class="title">drm</span></span>() &#123; docker rm $(docker ps -a -q); &#125;</span><br><span class="line"></span><br><span class="line">Stop and Remove all containers</span><br><span class="line"><span class="built_in">alias</span> drmf=<span class="string">'docker stop $(docker ps -a -q) &amp;&amp; docker rm $(docker ps -a -q)'</span></span><br><span class="line"></span><br><span class="line">Remove all images</span><br><span class="line"><span class="function"><span class="title">dri</span></span>() &#123; docker rmi $(docker images -q); &#125;</span><br><span class="line"></span><br><span class="line">Dockerfile build, e.g., <span class="variable">$dbu</span> tcnksm/<span class="built_in">test</span></span><br><span class="line"><span class="function"><span class="title">dbu</span></span>() &#123; docker build -t=<span class="variable">$1</span> .; &#125;</span><br><span class="line"></span><br><span class="line">Show all <span class="built_in">alias</span> related docker</span><br><span class="line"><span class="function"><span class="title">dalias</span></span>() &#123; <span class="built_in">alias</span> | grep <span class="string">'docker'</span> | sed <span class="string">"s/^([^=])=(.)/\1 =&gt; \2/"</span>| sed <span class="string">"s/['|']//g"</span> | sort; &#125;</span><br><span class="line"></span><br><span class="line">Bash into running container</span><br><span class="line"><span class="function"><span class="title">dbash</span></span>() &#123; docker <span class="built_in">exec</span> -it $(docker ps -aqf <span class="string">"name=<span class="variable">$1</span>"</span>) bash; &#125;</span><br></pre></td></tr></table></figure>
 
         </div>
 

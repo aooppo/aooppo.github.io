@@ -14,25 +14,25 @@
     
     
     
-    <title>Docker常用命令及使用 | TJ&#39;s blog</title>
+    <title>Docker常用命令及使用 | TJ&#39;s blog | 关于技术 关于生活</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content="docker,shell">
-    <meta name="description" content="以下是在 centos 系统下执行  sudo yum install -y yum-utils device-mapper-persistent-data lvm2  sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo  sudo yum makecache">
+    <meta name="description" content="以下是在 centos 系统下执行 sudo yum install -y yum-utils device-mapper-persistent-data lvm2sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.reposudo yum makecache fasts">
 <meta name="keywords" content="docker,shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker常用命令及使用">
 <meta property="og:url" content="https://voox.cc/2017/11/20/Docker常用命令及使用/index.html">
 <meta property="og:site_name" content="TJ&#39;s blog">
-<meta property="og:description" content="以下是在 centos 系统下执行  sudo yum install -y yum-utils device-mapper-persistent-data lvm2  sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo  sudo yum makecache">
+<meta property="og:description" content="以下是在 centos 系统下执行 sudo yum install -y yum-utils device-mapper-persistent-data lvm2sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.reposudo yum makecache fasts">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-01-31T06:08:56.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker常用命令及使用">
-<meta name="twitter:description" content="以下是在 centos 系统下执行  sudo yum install -y yum-utils device-mapper-persistent-data lvm2  sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo  sudo yum makecache">
+<meta name="twitter:description" content="以下是在 centos 系统下执行 sudo yum install -y yum-utils device-mapper-persistent-data lvm2sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.reposudo yum makecache fasts">
     
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
@@ -169,30 +169,7 @@
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <p>以下是在 centos 系统下执行</p>
-<pre><code class="sh">
-sudo yum install -y yum-utils device-mapper-persistent-data lvm2
-
-sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo
-
-sudo yum makecache fast
-
-sudo yum install docker-ce
-
-vi /etc/docker/daemon.json
-
-{
-  &quot;registry-mirrors&quot; : [
-    &quot;https://xxxx.mirror.aliyuncs.com&quot;
-  ],
-  &quot;insecure-registries&quot; : [
-    &quot;registry.mirrors.aliyuncs.com&quot;
-  ],
-  &quot;debug&quot; : true,
-  &quot;experimental&quot; : true
-}
-sudo systemctl start docker
-
-</code></pre>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line"></span><br><span class="line">sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line">sudo yum makecache fast</span><br><span class="line"></span><br><span class="line">sudo yum install docker-ce</span><br><span class="line"></span><br><span class="line">vi /etc/docker/daemon.json</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"registry-mirrors"</span> : [</span><br><span class="line">    <span class="string">"https://xxxx.mirror.aliyuncs.com"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="string">"insecure-registries"</span> : [</span><br><span class="line">    <span class="string">"registry.mirrors.aliyuncs.com"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="string">"debug"</span> : <span class="literal">true</span>,</span><br><span class="line">  <span class="string">"experimental"</span> : <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line">sudo systemctl start docker</span><br></pre></td></tr></table></figure>
 
         </div>
 
