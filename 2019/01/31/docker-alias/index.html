@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>docker alias | TJ&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="shell">
+    <meta name="description" content="Docker alias and functionGet latest container ID alias dl=&amp;quot;docker ps -l -q&amp;quot;  Get container process alias dps=&amp;quot;docker ps&amp;quot;  Get process included stop container alias dpa=&amp;quot;docke">
+<meta name="keywords" content="shell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker alias">
+<meta property="og:url" content="https://voox.cc/2019/01/31/docker-alias/index.html">
+<meta property="og:site_name" content="TJ&#39;s blog">
+<meta property="og:description" content="Docker alias and functionGet latest container ID alias dl=&amp;quot;docker ps -l -q&amp;quot;  Get container process alias dps=&amp;quot;docker ps&amp;quot;  Get process included stop container alias dpa=&amp;quot;docke">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-31T06:07:49.999Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker alias">
+<meta name="twitter:description" content="Docker alias and functionGet latest container ID alias dl=&amp;quot;docker ps -l -q&amp;quot;  Get container process alias dps=&amp;quot;docker ps&amp;quot;  Get process included stop container alias dpa=&amp;quot;docke">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">TJ</h5>
+          <a href="mailto:i@voox.cc" title="i@voox.cc" class="mail">i@voox.cc</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/aooppo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-link"></i>
+                About
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">docker alias</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">docker alias</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-31T06:07:03.000Z" itemprop="datePublished" class="page-time">
+  2019-01-31
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Docker-alias-and-function"><span class="post-toc-number">1.</span> <span class="post-toc-text">Docker alias and function</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-docker-alias" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">docker alias</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-31 14:07:03" datetime="2019-01-31T06:07:03.000Z" itemprop="datePublished">2019-01-31</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <hr>
+<h2 id="Docker-alias-and-function"><a href="#Docker-alias-and-function" class="headerlink" title="Docker alias and function"></a>Docker alias and function</h2><pre><code class="sh">Get latest container ID
+alias dl=&quot;docker ps -l -q&quot;
+
+Get container process
+alias dps=&quot;docker ps&quot;
+
+Get process included stop container
+alias dpa=&quot;docker ps -a&quot;
+
+Get images
+alias di=&quot;docker images&quot;
+
+Get container IP
+alias dip=&quot;docker inspect --format &#39;{{ .NetworkSettings.IPAddress }}&#39;&quot;
+
+Run deamonized container, e.g., $dkd base /bin/echo hello
+alias dkd=&quot;docker run -d -P&quot;
+
+Run interactive container, e.g., $dki base /bin/bash
+alias dki=&quot;docker run -i -t -P&quot;
+
+Execute interactive container, e.g., $dex base /bin/bash
+alias dex=&quot;docker exec -i -t&quot;
+
+Stop all containers
+dstop() { docker stop $(docker ps -a -q); }
+
+Remove all containers
+drm() { docker rm $(docker ps -a -q); }
+
+Stop and Remove all containers
+alias drmf=&#39;docker stop $(docker ps -a -q) &amp;&amp; docker rm $(docker ps -a -q)&#39;
+
+Remove all images
+dri() { docker rmi $(docker images -q); }
+
+Dockerfile build, e.g., $dbu tcnksm/test
+dbu() { docker build -t=$1 .; }
+
+Show all alias related docker
+dalias() { alias | grep &#39;docker&#39; | sed &quot;s/^([^=])=(.)/\1 =&gt; \2/&quot;| sed &quot;s/[&#39;|&#39;]//g&quot; | sort; }
+
+Bash into running container
+dbash() { docker exec -it $(docker ps -aqf &quot;name=$1&quot;) bash; }
+</code></pre>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-01-31T06:07:49.999Z" itemprop="dateUpdated">2019-01-31 14:07:49</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2019/01/31/docker-alias/" target="_blank" rel="external">https://voox.cc/2019/01/31/docker-alias/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="https://voox.cc">
+            <img src="/img/avatar.jpg" alt="TJ">
+            TJ
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shell/">shell</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://voox.cc/2019/01/31/docker-alias/&title=《docker alias》 — TJ's blog&pic=https://voox.cc/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://voox.cc/2019/01/31/docker-alias/&title=《docker alias》 — TJ's blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://voox.cc/2019/01/31/docker-alias/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《docker alias》 — TJ's blog&url=https://voox.cc/2019/01/31/docker-alias/&via=https://voox.cc" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://voox.cc/2019/01/31/docker-alias/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/01/31/Docker常用命令及使用/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Docker常用命令及使用</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname;
+        if (location.pathname.length > 50) {
+            id = location.pathname
+                .replace(/\/\d+\/\d+\/\d+\//, "")
+                .replace("/", "")
+                .substring(0, 50);
+        }
+        const gitalk = new Gitalk({
+            clientID: "465dd7495d4c092fc15f",
+            clientSecret: "73f56b04a04b186b8131217d24b4a7f56c0036f0",
+            repo: "comments",
+            owner: "aooppo",
+            admin: ["aooppo"],
+            id: id, // Ensure uniqueness and length less than 50
+            title: document.title.split("|")[0],
+            distractionFreeMode: false // Facebook-like distraction free mode
+        });
+
+        gitalk.render("gitalk-container");
+    </script>
+</section>
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>TJ &copy; 2018 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://voox.cc/2019/01/31/docker-alias/&title=《docker alias》 — TJ's blog&pic=https://voox.cc/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://voox.cc/2019/01/31/docker-alias/&title=《docker alias》 — TJ's blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://voox.cc/2019/01/31/docker-alias/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《docker alias》 — TJ's blog&url=https://voox.cc/2019/01/31/docker-alias/&via=https://voox.cc" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://voox.cc/2019/01/31/docker-alias/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://voox.cc/2019/01/31/docker-alias/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
