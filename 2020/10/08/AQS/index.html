@@ -29,7 +29,7 @@
 <meta property="og:description" content="1 ReentrantLock1.1 ReentrantLock特性概览ReentrantLock意思为可重入锁，指的是一个线程能够对一个临界资源重复加锁。为了帮助大家更好地理解ReentrantLock的特性，我们先将ReentrantLock跟常用的Synchronized进行比较，其特性如下:">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://p0.meituan.net/travelcube/412d294ff5535bbcddc0d979b2a339e6102264.png">
-<meta property="og:updated_time" content="2020-10-08T04:52:06.884Z">
+<meta property="og:updated_time" content="2020-10-08T05:28:46.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AQS">
 <meta name="twitter:description" content="1 ReentrantLock1.1 ReentrantLock特性概览ReentrantLock意思为可重入锁，指的是一个线程能够对一个临界资源重复加锁。为了帮助大家更好地理解ReentrantLock的特性，我们先将ReentrantLock跟常用的Synchronized进行比较，其特性如下:">
@@ -147,6 +147,13 @@
 
 <div class="container body-wrap">
     
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-ReentrantLock"><span class="post-toc-number">1.</span> <span class="post-toc-text">1 ReentrantLock</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-ReentrantLock特性概览"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">1.1 ReentrantLock特性概览</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-ReentrantLock与AQS的关联"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">1.2 ReentrantLock与AQS的关联</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
 
 <article id="post-AQS" class="post-article article-type-post fade" itemprop="blogPost">
 
@@ -162,13 +169,34 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>1 ReentrantLock<br>1.1 ReentrantLock特性概览<br>ReentrantLock意思为可重入锁，指的是一个线程能够对一个临界资源重复加锁。为了帮助大家更好地理解ReentrantLock的特性，我们先将ReentrantLock跟常用的Synchronized进行比较，其特性如下:<br><figure class="image-bubble">
+            <h1 id="1-ReentrantLock"><a href="#1-ReentrantLock" class="headerlink" title="1 ReentrantLock"></a>1 ReentrantLock</h1><h3 id="1-1-ReentrantLock特性概览"><a href="#1-1-ReentrantLock特性概览" class="headerlink" title="1.1 ReentrantLock特性概览"></a>1.1 ReentrantLock特性概览</h3><p>ReentrantLock意思为可重入锁，指的是一个线程能够对一个临界资源重复加锁。为了帮助大家更好地理解ReentrantLock的特性，我们先将ReentrantLock跟常用的Synchronized进行比较，其特性如下:<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="https://p0.meituan.net/travelcube/412d294ff5535bbcddc0d979b2a339e6102264.png" alt="" title="">
                 </div>
                 <div class="image-caption"></div>
             </figure></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// **************************Synchronized的使用方式**************************</span></span><br><span class="line"><span class="comment">// 1.用于代码块</span></span><br><span class="line"><span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;&#125;</span><br><span class="line"><span class="comment">// 2.用于对象</span></span><br><span class="line"><span class="keyword">synchronized</span> (object) &#123;&#125;</span><br><span class="line"><span class="comment">// 3.用于方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">test</span> <span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 4.可重入</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">	<span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// **************************ReentrantLock的使用方式**************************</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span> <span class="params">()</span> throw Exception </span>&#123;</span><br><span class="line">	<span class="comment">// 1.初始化选择公平锁、非公平锁</span></span><br><span class="line">	ReentrantLock lock = <span class="keyword">new</span> ReentrantLock(<span class="keyword">true</span>);</span><br><span class="line">	<span class="comment">// 2.可用于代码块</span></span><br><span class="line">	lock.lock();</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// 3.支持多种加锁方式，比较灵活; 具有可重入特性</span></span><br><span class="line">			<span class="keyword">if</span>(lock.tryLock(<span class="number">100</span>, TimeUnit.MILLISECONDS))&#123; &#125;</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">			<span class="comment">// 4.手动释放锁</span></span><br><span class="line">			lock.unlock()</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		lock.unlock();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-ReentrantLock与AQS的关联"><a href="#1-2-ReentrantLock与AQS的关联" class="headerlink" title="1.2 ReentrantLock与AQS的关联"></a>1.2 ReentrantLock与AQS的关联</h3><p>非公平锁源码中的加锁流程如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// java.util.concurrent.locks.ReentrantLock#NonfairSync</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 非公平锁</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NonfairSync</span> <span class="keyword">extends</span> <span class="title">Sync</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (compareAndSetState(<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">			setExclusiveOwnerThread(Thread.currentThread());</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			acquire(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这块代码的含义为：</p>
+<ul>
+<li><p>若通过CAS设置变量State（同步状态）成功，也就是获取锁成功，则将当前线程设置为独占线程。</p>
+</li>
+<li><p>若通过CAS设置变量State（同步状态）失败，也就是获取锁失败，则进入Acquire方法进行后续处理。</p>
+</li>
+</ul>
+<p>第一步很好理解，但第二步获取锁失败后，后续的处理策略是怎么样的呢？这块可能会有以下思考：</p>
+<p>某个线程获取锁失败的后续流程是什么呢？有以下两种可能：<br>(1) 将当前线程获锁结果设置为失败，获取锁流程结束。这种设计会极大降低系统的并发度，并不满足我们实际的需求。所以就需要下面这种流程，也就是AQS框架的处理流程。</p>
+<p>(2) 存在某种排队等候机制，线程继续等待，仍然保留获取锁的可能，获取锁流程仍在继续。</p>
+<p>对于问题1的第二种情况，既然说到了排队等候机制，那么就一定会有某种队列形成，这样的队列是什么数据结构呢？</p>
+<p>处于排队等候机制中的线程，什么时候可以有机会获取锁呢？</p>
+<p>如果处于排队等候机制中的线程一直无法获取锁，还是需要一直等待吗，还是有别的策略来解决这一问题？</p>
+<p>带着非公平锁的这些问题，再看下公平锁源码中获锁的方式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// java.util.concurrent.locks.ReentrantLock#FairSync</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FairSync</span> <span class="keyword">extends</span> <span class="title">Sync</span> </span>&#123;</span><br><span class="line">  ...  </span><br><span class="line">	<span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		acquire(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到这块代码，我们可能会存在这种疑问：Lock函数通过Acquire方法进行加锁，但是具体是如何加锁的呢？</p>
+<p>结合公平锁和非公平锁的加锁流程，虽然流程上有一定的不同，但是都调用了Acquire方法，而Acquire方法是FairSync和UnfairSync的父类AQS中的核心方法。</p>
+<p>对于上边提到的问题，其实在ReentrantLock类源码中都无法解答，而这些问题的答案，都是位于Acquire方法所在的类AbstractQueuedSynchronizer中，也就是本文的核心——AQS。</p>
 
         </div>
 
@@ -177,7 +205,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-10-08T04:52:06.884Z" itemprop="dateUpdated">2020-10-08 12:52:06</time>
+    最后更新时间：<time datetime="2020-10-08T05:28:46.727Z" itemprop="dateUpdated">2020-10-08 13:28:46</time>
 </span><br>
 
 
