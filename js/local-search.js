@@ -6,9 +6,9 @@ window.addEventListener('DOMContentLoaded', () => {
     let isXml = true;
     // Search DB path
     let searchPath = CONFIG.path;
-    if (searchPath.length === 0) {
+    if (searchPath && searchPath.length === 0) {
         searchPath = 'search.xml';
-    } else if (searchPath.endsWith('json')) {
+    } else if (searchPath && searchPath.endsWith('json')) {
         isXml = false;
     }
     const input = document.querySelector('.search-input');
