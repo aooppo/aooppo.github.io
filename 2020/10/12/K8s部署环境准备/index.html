@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    
+    <title>
+        K8s Devops环境搭建准备 | TJ&#39;s Blog
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/favicon.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"voox.cc","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"ILS","repository":"voox.cc"}};
+  </script>
+</head>
+
+
+<body>
+<div class="page-container">
+
+    <header class="page-header">
+        <div class="header-progress"></div>
+    </header>
+
+    <main class="page-main">
+
+        <div class="page-main-content">
+
+            <div class="page-main-content-top">
+                <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            TJ&#39;s Blog
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class="" href="/">
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class="" href="/archives">
+                        归档
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class="" href="/projects">
+                        PROJECTS
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class="" href="/graphql-intro">
+                        GRAPHQL-INTRO
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class="" href="/about">
+                        关于
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class="" href="https://github.com/aooppo">
+                        GITHUB
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class="" href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class="" href="/archives">归档</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class="" href="/projects">PROJECTS</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class="" href="/graphql-intro">GRAPHQL-INTRO</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class="" href="/about">关于</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class="" href="https://github.com/aooppo">GITHUB</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+            </div>
+
+            <div class="page-main-content-middle">
+
+                <main class="main-content normal-code-theme">
+
+                    
+                        <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">K8s Devops环境搭建准备</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-10-12 17:26:35
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/k8sdocker/">k8s
+docker</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <h3 id="安装依赖-vagrant-和virtual-box"><a href="#安装依赖-vagrant-和virtual-box" class="headerlink" title="安装依赖 vagrant 和virtual box"></a>安装依赖 vagrant 和virtual box</h3><p>创建文件 vagrantfile<br>以下是文件内容：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> |config|</span><br><span class="line">   (1..3).each <span class="keyword">do</span> |i|</span><br><span class="line">        config.vm.define <span class="string">"k8s-node#&#123;i&#125;"</span> <span class="keyword">do</span> |node|</span><br><span class="line">            <span class="comment"># 设置虚拟机的Box</span></span><br><span class="line">            node.vm.box = <span class="string">"centos/7"</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 设置虚拟机的主机名</span></span><br><span class="line">            node.vm.hostname=<span class="string">"k8s-node#&#123;i&#125;"</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 设置虚拟机的IP</span></span><br><span class="line">            node.vm.network <span class="string">"private_network"</span>, ip: <span class="string">"192.168.56.#&#123;99+i&#125;"</span>, netmask: <span class="string">"255.255.255.0"</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 设置主机与虚拟机的共享目录</span></span><br><span class="line">            <span class="comment"># node.vm.synced_folder "~/Documents/vagrant/share", "/home/vagrant/share"</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># VirtaulBox相关配置</span></span><br><span class="line">            node.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> |v|</span><br><span class="line">                <span class="comment"># 设置虚拟机的名称</span></span><br><span class="line">                v.name = <span class="string">"k8s-node#&#123;i&#125;"</span></span><br><span class="line">                <span class="comment"># 设置虚拟机的内存大小</span></span><br><span class="line">                v.memory = 4096</span><br><span class="line">                <span class="comment"># 设置虚拟机的CPU个数</span></span><br><span class="line">                v.cpus = 4</span><br><span class="line">            end</span><br><span class="line">        end</span><br><span class="line">   end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>然后执行 vagrant up</p>
+<p>设置每一个虚拟机的网络环境<br><img src="/2020/10/12/K8s部署环境准备/image-1602495143.png" title="some description"></p>
+<font color="red">连接方式需要变成NAT网络<br><strong>每一个虚拟机的mac 地址需要刷新重新生成</strong><br></font>
+
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 检查eth0 ip</span></span><br><span class="line">ip route show</span><br><span class="line"><span class="comment"># 确认eth0 对应的ip 在每个虚拟机不一样</span></span><br><span class="line">ip addr</span><br><span class="line"><span class="comment"># 测试能否联通其他虚拟机</span></span><br><span class="line">ping 10.0.2.5</span><br><span class="line"><span class="comment">#测试能否联通外网</span></span><br><span class="line">ping baidu.com</span><br></pre></td></tr></table></figure>
+<p><strong>进入每一台虚拟机 开启密码访问登录</strong><br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant ssh k8s-node1</span><br><span class="line">su root</span><br><span class="line">vi /etc/ssh/sshd_config</span><br><span class="line"><span class="comment"># 输入i 进入编辑模式</span></span><br><span class="line"><span class="comment"># 更改 PasswordAuthentication no 设成yes</span></span><br><span class="line"><span class="comment"># 方便远程可以通过用户密码的方式登录</span></span><br><span class="line">PasswordAuthentication yes</span><br><span class="line"><span class="comment">#编辑后按ESC 输入wq 保存并退出</span></span><br><span class="line"><span class="comment"># 重启sshd 服务 让其生效</span></span><br><span class="line">service sshd restart</span><br></pre></td></tr></table></figure></p>
+<p>通过ssh 登录各个虚拟机<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 关闭防火墙</span></span><br><span class="line">systemctl stop firewalld</span><br><span class="line"><span class="comment"># 禁用防火墙</span></span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line"><span class="comment">#关闭linux安全策略</span></span><br><span class="line">sed -i <span class="string">'s/enforcing/disabled/'</span> /etc/selinux/config</span><br><span class="line">setenforce 0</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <div class="article-nav">
+            
+            
+                <div class="article-next">
+                    <a class="next btn" rel="next" href="/2020/10/09/Sentinel-的使用/">
+                        <span class="post-nav-title-item">Sentinel 的使用</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="/js/md5.js"></script>
+    <div id="gitalk-container"></div>
+    <script>
+        const gitalk = new Gitalk({
+            clientID: '465dd7495d4c092fc15f',
+            clientSecret: '73f56b04a04b186b8131217d24b4a7f56c0036f0',
+            repo: 'comments',
+            owner: 'aooppo',
+            admin: ['aooppo'],
+            id: md5(location.pathname),
+            language: ''
+        })
+        gitalk.render('gitalk-container')
+    </script>
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+
+                    
+
+                </main>
+
+            </div>
+
+            <div class="page-main-content-bottom">
+                <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <i class="fa fa-heart-o"></i> <a href="/">TJ</a>
+        </div>
+        
+   
+    </div>
+</footer>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="sidebar-tools">
+        <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            <script src="/js/local-search.js"></script>
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+        <li class="page-aside-toggle">
+            <i class="fa fa-bars"></i>
+        </li>
+        
+            <li class="scroll-to-top">
+                <i class="fa fa-caret-up"></i>
+            </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    <!-- page aside -->
+    <aside class="page-aside">
+        
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装依赖-vagrant-和virtual-box"><span class="nav-number">1.</span> <span class="nav-text">安装依赖 vagrant 和virtual box</span></a></li></ol>
+    </div>
+</div>
+        
+    </aside>
+
+</div>
+
+
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+    <script src="/js/scroll-to-top.js"></script>
+
+
+
+
+    
+        <script src="/js/code-copy.js"></script>
+    
+
+    
+
+
+
+</body>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c1b31db7a7ea55c71d92dc4a7cea0cc3";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</html>
