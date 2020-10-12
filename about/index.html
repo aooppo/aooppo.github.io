@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><link rel=manifest href=/manifest.json><meta name="generator" content="Hexo 3.8.0"><link rel="manifest" href="/manifest.json">
     <meta charset="utf-8">
     
     <title>
@@ -240,7 +240,12 @@
 
 
 
-</body>
+<script>if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js?t=1602511676440')
+    .then(function () {console.log('ServiceWorker Register Successfully.')})
+    .catch(function (e) {console.error(e)});
+}
+</script></body>
 <script>
     var _hmt = _hmt || [];
     (function() {
