@@ -41,13 +41,13 @@
             
                 <li class="menu-item">
                     <a class="" href="/">
-                        HOME
+                        首页
                     </a>
                 </li>
             
                 <li class="menu-item">
                     <a class="" href="/archives">
-                        ARCHIVES
+                        归档
                     </a>
                 </li>
             
@@ -65,7 +65,7 @@
             
                 <li class="menu-item">
                     <a class="" href="/about">
-                        ABOUT
+                        关于
                     </a>
                 </li>
             
@@ -86,11 +86,11 @@
         <ul class="drawer-menu-list">
             
                 <li class="drawer-menu-item">
-                    <a class="" href="/">HOME</a>
+                    <a class="" href="/">首页</a>
                 </li>
             
                 <li class="drawer-menu-item">
-                    <a class="" href="/archives">ARCHIVES</a>
+                    <a class="" href="/archives">归档</a>
                 </li>
             
                 <li class="drawer-menu-item">
@@ -102,7 +102,7 @@
                 </li>
             
                 <li class="drawer-menu-item">
-                    <a class="" href="/about">ABOUT</a>
+                    <a class="" href="/about">关于</a>
                 </li>
             
                 <li class="drawer-menu-item">
@@ -174,6 +174,9 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 检查eth0 ip</span></span><br><span class="line">ip route show</span><br><span class="line"><span class="comment"># 确认eth0 对应的ip 在每个虚拟机不一样</span></span><br><span class="line">ip addr</span><br><span class="line"><span class="comment"># 测试能否联通其他虚拟机</span></span><br><span class="line">ping 10.0.2.5</span><br><span class="line"><span class="comment">#测试能否联通外网</span></span><br><span class="line">ping baidu.com</span><br></pre></td></tr></table></figure>
 <p><strong>进入每一台虚拟机 开启密码访问登录</strong><br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vagrant ssh k8s-node1</span><br><span class="line">su root</span><br><span class="line">vi /etc/ssh/sshd_config</span><br><span class="line"><span class="comment"># 输入i 进入编辑模式</span></span><br><span class="line"><span class="comment"># 更改 PasswordAuthentication no 设成yes</span></span><br><span class="line"><span class="comment"># 方便远程可以通过用户密码的方式登录</span></span><br><span class="line">PasswordAuthentication yes</span><br><span class="line"><span class="comment">#编辑后按ESC 输入wq 保存并退出</span></span><br><span class="line"><span class="comment"># 重启sshd 服务 让其生效</span></span><br><span class="line">service sshd restart</span><br></pre></td></tr></table></figure></p>
 <p>通过ssh 登录各个虚拟机<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 关闭防火墙</span></span><br><span class="line">systemctl stop firewalld</span><br><span class="line"><span class="comment"># 禁用防火墙</span></span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld</span><br><span class="line"><span class="comment">#关闭linux安全策略</span></span><br><span class="line">sed -i <span class="string">'s/enforcing/disabled/'</span> /etc/selinux/config</span><br><span class="line">setenforce 0</span><br></pre></td></tr></table></figure></p>
+<img src="/2020/10/12/K8s部署环境准备/image-1602497147.png" title="some description">
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#（1）临时关闭swap分区, 重启失效;</span></span><br><span class="line">swapoff -a</span><br><span class="line"></span><br><span class="line"><span class="comment">#（2）永久关闭swap分区</span></span><br><span class="line">sed -ri <span class="string">'s/.*swap.*/#&amp;/'</span> /etc/fstab</span><br></pre></td></tr></table></figure>
+<p>添加主机名与ip对应关系<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/hosts</span><br><span class="line"></span><br><span class="line">10.0.2.5 k8s-node1</span><br><span class="line">10.0.2.4 k8s-node2</span><br><span class="line">10.0.2.15 k8s-node3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果主机名没设置对</span></span><br><span class="line">hostnamectl <span class="built_in">set</span>-hostname &lt;newhostname&gt;</span><br></pre></td></tr></table></figure></p>
 
         </div>
 
@@ -182,7 +185,7 @@
             
                 <div class="article-next">
                     <a class="next btn" rel="next" href="/2020/10/09/Sentinel-的使用/">
-                        <span class="post-nav-title-item">Sentinel 的使用</span><span class="post-nav-item">Next posts</span> <i class="fa fa-chevron-right"></i>
+                        <span class="post-nav-title-item">Sentinel 的使用</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
                     </a>
                 </div>
             
@@ -284,7 +287,7 @@
             <i class="fa fa-search"></i>
           </span>
             <div class="search-input-container">
-                <input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+                <input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input">
             </div>
             <span class="popup-btn-close">
                 <i class="fa fa-times"></i>
