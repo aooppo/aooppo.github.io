@@ -187,6 +187,11 @@
 
         <div class="article-content markdown-body">
             <blockquote>
+<h1 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h1></blockquote>
+<blockquote>
+<p>Kubernetes版本： 1.15.x ≤ K8s version ≤ 1.17.x；<br>Helm版本： 2.10.0 ≤ Helm Version ＜ 3.0.0，建议使用 Helm 2.16.2（不支持 helm 2.16.0 #6894），且已安装了 Tiller，参考 如何安装与配置 Helm （预计 3.0 支持 Helm v3）；<br>集群已有默认的存储类型（StorageClass），若还没有准备存储请参考 安装 OpenEBS 创建 LocalPV 存储类型 用作开发测试环境。<br>集群能够访问外网，若无外网请参考 在 Kubernetes 离线安装 KubeSphere。</p>
+</blockquote>
+<blockquote>
 <p>All-in-One 模式<br>对于首次接触 KubeSphere 的用户，想寻找一个最快安装和体验 KubeSphere 的方式，all-in-one 模式可一键安装 <strong>KubeSphere</strong> 和 <strong>Kubernetes</strong> 至一台目标机器。</p>
 </blockquote>
 <ul>
@@ -212,7 +217,14 @@
 
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#给master k8s-node1 添加污点</span></span><br><span class="line">kubectl taint nodes master1 node-role.kubernetes.io/master=:NoSchedule</span><br></pre></td></tr></table></figure>
 
-<p>至此，StorageClass 安装完毕。</p>
+<p>至此，StorageClass 安装完毕</p>
+<h1 id="部署-KubeSphere"><a href="#部署-KubeSphere" class="headerlink" title="部署 KubeSphere"></a>部署 KubeSphere</h1><h2 id="最小化快速部署"><a href="#最小化快速部署" class="headerlink" title="最小化快速部署"></a>最小化快速部署</h2><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/kubesphere/ks-installer/v2.1.1/deploy/kubesphere-installer.yaml</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/10/13/kubesphere-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2/image-1602581460.png" class="" title="some description">
+<p>Inspect the logs of installation.</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l app=ks-install -o jsonpath=<span class="string">&#x27;&#123;.items[0].metadata.name&#125;&#x27;</span>) -f</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/10/13/kubesphere-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2/image-1602581661.png" class="" title="some description">
 
         </div>
 
@@ -311,7 +323,7 @@
         
             <div class="post-toc-wrap">
     <div class="post-toc">
-        
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">前提条件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-KubeSphere"><span class="nav-number">2.</span> <span class="nav-text">部署 KubeSphere</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E5%8C%96%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2"><span class="nav-number">2.1.</span> <span class="nav-text">最小化快速部署</span></a></li></ol></li></ol>
     </div>
 </div>
         
