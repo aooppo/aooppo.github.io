@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        categories | TJ&#39;s Blog
+        Linux 用户空间与内核空间 | TJ&#39;s Blog
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="manifest" href="/manifest.json">
@@ -146,13 +146,95 @@
 
                     
                         <div class="fade-in-down-animation">
-    <div class="category-list-container">
-        <div class="category-list-content">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">Linux 用户空间与内核空间</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-10-23 22:12:32
+    </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/linux/">linux</a>
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/karnel/">karnel</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <h3 id="linux中的用户空间与内核空间"><a href="#linux中的用户空间与内核空间" class="headerlink" title="linux中的用户空间与内核空间"></a>linux中的用户空间与内核空间</h3><blockquote>
+<p>在操作系统中，虚拟内存通常会被分成用户空间（英语：User space，又译为使用者空间），与核心空间（英语：Kernel space，又译为内核空间）这两个区块。<br>这是存储器保护机制中的一环。<br>内核、核心扩充（kernel extensions）、以及驱动程序，运行在核心空间上。<br>而其他的应用程序，则运行在用户空间上。<br>所有运行在用户空间的应用程序，都被统称为用户级（userland）。</p>
+</blockquote>
+<p>学习 Linux 时，经常可以看到两个词：User space（用户空间）和 Kernel space（内核空间）。</p>
+<p>简单说，Kernel space 是 Linux 内核的运行空间，User space 是用户程序的运行空间。为了安全，它们是隔离的，即使用户的程序崩溃了，内核也不受影响。</p>
+<img src="/2020/10/23/IO-%E6%A8%A1%E5%9E%8B/image-1603462481.png" class="" title="some description">
+
+<p>Linux简化了分段机制，使得虚拟地址与线性地址总是一致，因此，Linux的虚拟地址空间也为0～4G。Linux内核将这4G字节的空间分为两部分：<br>将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为“内核空间”；<br>而将较低的3G字节（从虚拟地址 0x00000000到0xBFFFFFFF），供各个进程使用，称为“用户空间  ）。</p>
+<p>Kernel space 可以执行任意命令，调用系统的一切资源；User space 只能执行简单的运算，不能直接调用系统资源，必须通过系统接口（又称 system call），才能向内核发出指令。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">str = <span class="string">&quot;my string&quot;</span> <span class="comment">// 用户空间</span></span><br><span class="line">x = x + <span class="number">1</span></span><br><span class="line">file.write(str) <span class="comment">// 切换到内核空间</span></span><br><span class="line"></span><br><span class="line">y = x + <span class="number">2</span> <span class="comment">// 切换回用户空间</span></span><br></pre></td></tr></table></figure>
+
+<p>上面代码中，第一行和第二行都是简单的赋值运算，在 User space 执行。第三行需要写入文件，就要切换到 Kernel space，因为用户不能直接写文件，必须通过内核安排。第四行又是赋值运算，就切换回 User space。</p>
+<p>查看 CPU 时间在 User space 与 Kernel Space 之间的分配情况，可以使用<code>top</code>命令。它的第三行输出就是 CPU 时间分配统计。</p>
+<img src="/2020/10/23/IO-%E6%A8%A1%E5%9E%8B/image-1603463448.png" class="" title="some description">
+
+<p>其中，第一项0.0 us（user 的缩写）就是 CPU 消耗在 User space 的时间百分比，第二项3 .2 sy（system 的缩写）是消耗在 Kernel space 的时间百分比。</p>
+<p>其他 6 个指标的含义如下:</p>
+<ul>
+<li>ni：niceness 的缩写，CPU 消耗在 nice 进程（低优先级）的时间百分比</li>
+<li>id：idle 的缩写，CPU 消耗在闲置进程的时间百分比，这个值越低，表示 CPU 越忙</li>
+<li>wa：wait 的缩写，CPU 等待外部 I/O 的时间百分比，这段时间 CPU 不能干其他事，但是也没有执行运算，这个值太高就说明外部设备有问题</li>
+<li>hi：hardware interrupt 的缩写，CPU 响应硬件中断请求的时间百分比</li>
+<li>si：software interrupt 的缩写，CPU 响应软件中断请求的时间百分比</li>
+<li>st：stole time 的缩写，该项指标只对虚拟机有效，表示分配给当前虚拟机的 CPU 时间之中，被同一台物理机上的其他虚拟机偷走的时间百分比</li>
+</ul>
+<p>如果想查看单个程序的耗时，一般使用<code>time</code>命令。</p>
+<p>程序名之前加上time命令，会在程序执行完毕以后，默认显示三行统计。</p>
+<ul>
+<li>real：程序从开始运行到结束的全部时间，这是用户能感知到的时间，包括 CPU 切换去执行其他任务的时间。</li>
+<li>user：程序在 User space 执行的时间</li>
+<li>sys：程序在 Kernel space 执行的时间</li>
+</ul>
+<p>user和sys之和，一般情况下，应该小于real。但如果是多核 CPU，这两个指标反映的是所有 CPU 的总耗时，所以它们之和可能大于real。</p>
+<p>[参考资料]<br><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/12/user_space_vs_kernel_space.html">User space 与 Kernel space</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangskd/article/details/6956638">User space</a></p>
+
+        </div>
+
+        <div class="article-nav">
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/10/13/kubesphere-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2/"
+                    >
+                        <span class="post-nav-title-item">kubesphere 安装与部署</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
             
         </div>
-        <div class="category-comments">
-            
-                <div class="comments-container">
+
+        <div class="comment-container">
+            <div class="comments-container">
     
         
     <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
@@ -173,7 +255,6 @@
 
     
 </div>
-            
         </div>
     </div>
 </div>
@@ -231,6 +312,12 @@
     <!-- page aside -->
     <aside class="page-aside">
         
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#linux%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4"><span class="nav-number">1.</span> <span class="nav-text">linux中的用户空间与内核空间</span></a></li></ol>
+    </div>
+</div>
+        
     </aside>
 
 </div>
@@ -278,6 +365,15 @@
 
 
 
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
 
 
 
