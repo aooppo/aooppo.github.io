@@ -187,7 +187,7 @@
 </blockquote>
 <p>学习 Linux 时，经常可以看到两个词：User space（用户空间）和 Kernel space（内核空间）。</p>
 <p>简单说，Kernel space 是 Linux 内核的运行空间，User space 是用户程序的运行空间。为了安全，它们是隔离的，即使用户的程序崩溃了，内核也不受影响。</p>
-<img src="/2020/10/23/IO-%E6%A8%A1%E5%9E%8B/image-1603462481.png" class="" title="some description">
+<img src="/2020/10/23/Linux%20%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4/image-1603462481.png" class="" title="some description">
 
 <p>Linux简化了分段机制，使得虚拟地址与线性地址总是一致，因此，Linux的虚拟地址空间也为0～4G。Linux内核将这4G字节的空间分为两部分：<br>将最高的1G字节（从虚拟地址0xC0000000到0xFFFFFFFF），供内核使用，称为“内核空间”；<br>而将较低的3G字节（从虚拟地址 0x00000000到0xBFFFFFFF），供各个进程使用，称为“用户空间  ）。</p>
 <p>Kernel space 可以执行任意命令，调用系统的一切资源；User space 只能执行简单的运算，不能直接调用系统资源，必须通过系统接口（又称 system call），才能向内核发出指令。</p>
@@ -195,7 +195,7 @@
 
 <p>上面代码中，第一行和第二行都是简单的赋值运算，在 User space 执行。第三行需要写入文件，就要切换到 Kernel space，因为用户不能直接写文件，必须通过内核安排。第四行又是赋值运算，就切换回 User space。</p>
 <p>查看 CPU 时间在 User space 与 Kernel Space 之间的分配情况，可以使用<code>top</code>命令。它的第三行输出就是 CPU 时间分配统计。</p>
-<img src="/2020/10/23/IO-%E6%A8%A1%E5%9E%8B/image-1603463448.png" class="" title="some description">
+<img src="/2020/10/23/Linux%20%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4/image-1603463448.png" class="" title="some description">
 
 <p>其中，第一项0.0 us（user 的缩写）就是 CPU 消耗在 User space 的时间百分比，第二项3 .2 sy（system 的缩写）是消耗在 Kernel space 的时间百分比。</p>
 <p>其他 6 个指标的含义如下:</p>
