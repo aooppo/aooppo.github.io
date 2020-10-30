@@ -263,7 +263,7 @@
 <h3 id="NioEventLoop与NioChannel类关系"><a href="#NioEventLoop与NioChannel类关系" class="headerlink" title="NioEventLoop与NioChannel类关系"></a>NioEventLoop与NioChannel类关系</h3><img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603983917.png" class="" title="some description">
 <p>一个NioEventLoopGroup下包含多个NioEventLoop</p>
 <p>每个NioEventLoop中包含有一个Selector，一个taskQueue，一个delayedTaskQueue</p>
-<p>每个NioEventLoop的Selector上可以注册监听多个AbstractNioChannel.ch</p>
+<p>每个NioEventLoop的Selector上可以注册监听多个AbstractNioChannel</p>
 <p>每个AbstractNioChannel只会绑定在唯一的NioEventLoop上</p>
 <p>每个AbstractNioChannel都绑定有一个自己的DefaultChannelPipeline</p>
 
