@@ -17,7 +17,7 @@
     <script id="hexo-configurations">
     let CONFIG = {"hostname":"voox.cc","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"ILS","repository":"voox.cc"}};
   </script>
-<meta name="generator" content="Hexo 5.2.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -147,6 +147,35 @@
                     
                         <div class="home-content-container fade-in-down-animation">
     <ul class="home-article-list">
+        
+            <li class="home-article-item">
+
+                <h3 class="home-article-title">
+                    <a href="/2019/03/01/update-by-partition/">
+                        
+                        update by partition
+                    </a>
+                </h3>
+
+                <div class="home-article-content markdown-body">
+                    
+                        sql update top 5
+SELECT  ROW_NUMBER() OVER (PARTITION BY col1, col2    ORDER BY x desc) AS r,  t.id  FROM    some_table t  where condition = &#x27;...
+                    
+                </div>
+
+                <div class="home-article-meta-info">
+                    <div class="article-date">
+                        <span><i class="fa fa-pencil-square-o"></i> 2019-03-01</span>
+                        
+                            
+                            
+                        
+                    </div>
+                    
+                    <a href="/2019/03/01/update-by-partition/">Read more <i class="fa fa-angle-right"></i></a>
+                </div>
+            </li>
         
             <li class="home-article-item">
 

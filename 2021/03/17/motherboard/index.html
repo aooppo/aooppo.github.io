@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     
     <title>
-        spring-boot2 自动装配 | TJ&#39;s Blog
+        motherboard | TJ&#39;s Blog
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="manifest" href="/manifest.json">
@@ -17,7 +17,7 @@
     <script id="hexo-configurations">
     let CONFIG = {"hostname":"voox.cc","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"ILS","repository":"voox.cc"}};
   </script>
-<meta name="generator" content="Hexo 5.2.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -149,13 +149,13 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <h3><a class="title-hover-animation">spring-boot2 自动装配</a></h3>
+            <h3><a class="title-hover-animation">motherboard</a></h3>
         </div>
 
         <div class="meta-info">
             <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fa fa-calendar-o"></i> 2021-03-29 11:41:56
+        <i class="fa fa-calendar-o"></i> 2021-03-17 22:33:44
     </span>
     
     
@@ -164,7 +164,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/spring-boot/">spring-boot</a>
+                        <a href="/tags/hardware/">hardware</a>
                     </li>
                 
             </ul>
@@ -178,40 +178,22 @@
         </div>
 
         <div class="article-content markdown-body">
-            <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ConfigurableApplicationContext context = SpringApplication.run(DemoApplication.class, args);</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>通过SpringApplication.run 可以进入方法得知spring底层自动扫描所有在**META-INF/spring.factories ** 中默认配置好的自动装配类，然后根据条件按需加载组件（bean）到spring容器中。</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, List&lt;String&gt;&gt; loadSpringFactories(<span class="meta">@Nullable</span> ClassLoader classLoader) &#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">      Enumeration&lt;URL&gt; urls = (classLoader != <span class="keyword">null</span> ?</span><br><span class="line">            classLoader.getResources(FACTORIES_RESOURCE_LOCATION) :</span><br><span class="line">            ClassLoader.getSystemResources(FACTORIES_RESOURCE_LOCATION));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> cc.voox.demo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ConfigurableApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@SpringBootApplication 是由多个注解组合而成。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan(excludeFilters = &#123; @Filter(type = FilterType.CUSTOM, classes = TypeExcludeFilter.class),</span></span><br><span class="line"><span class="meta">		@Filter(type = FilterType.CUSTOM, classes = AutoConfigurationExcludeFilter.class) &#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootApplication &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>@SpringBootConfiguration 和 @Configuration 功能一样</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootConfiguration &#123;&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>@<strong>SpringBootConfiguration</strong> is a class-level annotation that is part of the Spring Boot framework. It indicates that a class provides application configuration. Spring Boot favors Java-based configuration. As a result, the @<strong>SpringBootConfiguration</strong> annotation is the primary source for configuration in applications.</p>
-</blockquote>
-<p>@ComponentScan</p>
-<p><em>包扫描器</em></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import(AutoConfigurationImportSelector.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableAutoConfiguration &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>自动导入<strong>AutoConfigurationImportSelector</strong> 组件后，通过组件内方法<strong>selectImports</strong>装配到容器中</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> String[] selectImports(AnnotationMetadata annotationMetadata) &#123;</span><br><span class="line"></span><br><span class="line">	AutoConfigurationEntry autoConfigurationEntry = getAutoConfigurationEntry(annotationMetadata);</span><br><span class="line">	<span class="keyword">return</span> StringUtils.toStringArray(autoConfigurationEntry.getConfigurations());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>利用package import 批量注册组件到容器中。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Import(AutoConfigurationPackages.Registrar.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AutoConfigurationPackage &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Registrar</span> <span class="keyword">implements</span> <span class="title">ImportBeanDefinitionRegistrar</span>, <span class="title">DeterminableImports</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBeanDefinitions</span><span class="params">(AnnotationMetadata metadata, BeanDefinitionRegistry registry)</span> </span>&#123;</span><br><span class="line">			register(registry, <span class="keyword">new</span> PackageImports(metadata).getPackageNames().toArray(<span class="keyword">new</span> String[<span class="number">0</span>]));</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p>amd x570</p>
+<img src="/2021/03/17/motherboard/image-1616048599.png" class="" title="amd">
 
 
         </div>
 
         <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2021/03/30/yq/ioml9e/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">yuque-blog1</span><span class="post-nav-item">Prev posts</span>
+                    </a>
+                </div>
             
             
                 <div class="article-next">

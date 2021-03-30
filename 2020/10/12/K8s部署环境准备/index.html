@@ -17,7 +17,7 @@
     <script id="hexo-configurations">
     let CONFIG = {"hostname":"voox.cc","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"ILS","repository":"voox.cc"}};
   </script>
-<meta name="generator" content="Hexo 5.2.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -207,7 +207,7 @@
 <p>添加主机名与ip对应关系</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi /etc/hosts</span><br><span class="line"></span><br><span class="line">10.0.2.5 k8s-node1</span><br><span class="line">10.0.2.4 k8s-node2</span><br><span class="line">10.0.2.15 k8s-node3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果主机名没设置对</span></span><br><span class="line">hostnamectl set-hostname &lt;newhostname&gt;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 桥接的ipv4 流量传递到iptables</span></span><br><span class="line">cat &gt;/etc/sysctl.d/k8s.conf &lt;&lt; EOF</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables =1</span><br><span class="line">net.bridge.bridge-nf-call-iptables =1</span><br><span class="line">EOF</span><br><span class="line">sysctl --system</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 桥接的ipv4 流量传递到iptables</span></span><br><span class="line">cat &gt;/etc/sysctl.d/k8s.conf &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-ip6tables =1</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-iptables =1</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">sysctl --system</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <img src="/2020/10/12/K8s%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/image-1602498926.png" class="" title="some description">
 
@@ -216,7 +216,7 @@
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;registry-mirrors&quot;</span>: [<span class="string">&quot;https://yourcode.mirror.aliyuncs.com&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 
 
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#更换yum 源为aliyun</span></span><br><span class="line">cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=0</span><br><span class="line">repo_gpgcheck=0</span><br><span class="line">gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</span><br><span class="line">       http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment">#更换yum 源为aliyun</span></span><br><span class="line">cat &lt;&lt;<span class="string">EOF &gt; /etc/yum.repos.d/kubernetes.repo</span></span><br><span class="line"><span class="string">[kubernetes]</span></span><br><span class="line"><span class="string">name=Kubernetes</span></span><br><span class="line"><span class="string">baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64</span></span><br><span class="line"><span class="string">enabled=1</span></span><br><span class="line"><span class="string">gpgcheck=0</span></span><br><span class="line"><span class="string">repo_gpgcheck=0</span></span><br><span class="line"><span class="string">gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</span></span><br><span class="line"><span class="string">       http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">yum install -y kubelet-1.17.3 kubeadm-1.17.3 kubectl-1.17.3</span><br><span class="line">systemctl <span class="built_in">enable</span> kubelet</span><br><span class="line">systemctl start kubelet</span><br></pre></td></tr></table></figure>
 

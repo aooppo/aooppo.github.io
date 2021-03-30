@@ -17,7 +17,7 @@
     <script id="hexo-configurations">
     let CONFIG = {"hostname":"voox.cc","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"ILS","repository":"voox.cc"}};
   </script>
-<meta name="generator" content="Hexo 5.2.0"></head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
@@ -183,7 +183,7 @@
 
         <div class="article-content markdown-body">
             <p>sql update top 5</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">  ROW_NUMBER() <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> col1, col2</span><br><span class="line">    <span class="keyword">ORDER</span> <span class="keyword">BY</span> x <span class="keyword">desc</span>) <span class="keyword">AS</span> r,</span><br><span class="line">  t.id</span><br><span class="line">  <span class="keyword">FROM</span></span><br><span class="line">    some_table t</span><br><span class="line">  <span class="keyword">where</span> condition = <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line">) A</span><br><span class="line"><span class="keyword">where</span> A.r &lt; <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">  <span class="built_in">ROW_NUMBER</span>() <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> col1, col2</span><br><span class="line">    <span class="keyword">ORDER</span> <span class="keyword">BY</span> x <span class="keyword">desc</span>) <span class="keyword">AS</span> r,</span><br><span class="line">  t.id</span><br><span class="line">  <span class="keyword">FROM</span></span><br><span class="line">    some_table t</span><br><span class="line">  <span class="keyword">where</span> <span class="keyword">condition</span> <span class="operator">=</span> <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line">) A</span><br><span class="line"><span class="keyword">where</span> A.r <span class="operator">&lt;</span> <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
 
         </div>
 
