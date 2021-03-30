@@ -167,7 +167,7 @@
         </div>
 
         <div class="article-content markdown-body">
-            <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ConfigurableApplicationContext context = SpringApplication.run(DemoApplication.class, args);</span><br></pre></td></tr></table></figure>
+            <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ConfigurableApplicationContext context = SpringApplication.run(DemoApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ol>
 <li>通过 SpringApplication.run 可以进入方法得知 spring 底层自动扫描所有在**META-INF/spring.factories ** 中默认配置好的自动装配类，然后根据条件按需加载组件（bean）到 spring 容器中。</li>
