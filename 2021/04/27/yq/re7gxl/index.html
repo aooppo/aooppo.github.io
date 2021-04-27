@@ -6,7 +6,7 @@
 
     
     <title>
-        categories | TJ&#39;s Blog
+        Pull Request 使用如何简化提交历史 | TJ&#39;s Blog
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="manifest" href="/manifest.json">
@@ -135,13 +135,73 @@
 
                     
                         <div class="fade-in-down-animation">
-    <div class="category-list-container">
-        <div class="category-list-content">
-            <ul class="all-category-list"><li class="all-category-list-item"><a class="all-category-list-link" href="/categories/Java/">Java</a><span class="all-category-list-count">1</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/categories/Linux/">Linux</a><span class="all-category-list-count">1</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/categories/bios/">bios</a><span class="all-category-list-count">1</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/categories/git/">git</a><span class="all-category-list-count">1</span></li></ul>
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">Pull Request 使用如何简化提交历史</a></h3>
         </div>
-        <div class="category-comments">
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2021-04-27 19:30:00
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa fa-folder"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/categories/git/">git</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa fa-tags"></i>
+            <ul>
+                
+                    <li>
+                        <a href="/tags/git/">git</a>
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+    
+    
+</div>
+
+        </div>
+
+        <div class="article-content markdown-body">
+            <p>通常我们使用 git 的时候，Pull Request (PR) 是一个非常重要的功能对于多人合作开发一个项目来说。<br>假设我们有一个项目的提交历史看起来如下图：<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619520682422-3cdbef19-4823-423d-b1af-e9c7bbd7fb66.png#align=left&display=inline&height=356&margin=%5Bobject%20Object%5D&name=image.png&originHeight=712&originWidth=1197&size=53909&status=done&style=none&width=599" alt="image.png"><br>这里我们能看出上图提交历史还是一条直线，在 <code>94b7b85422c</code> 提交之后有一次合并操作，很清晰的知道仓库的管理操作历史。<br>反之，如果提交历史有很多线我们很难追溯过往的提交，如下图：<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619521063089-229c3ba4-bfb3-4e33-8432-be6c8c02087a.png#align=left&display=inline&height=344&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1277&originWidth=2599&size=759539&status=done&style=none&width=700" alt="image.png"></p>
+<p>假设当前仓库后续又有 3 次提交在 master 分支<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619521287142-6a406a1b-f8ee-4357-9e29-97363ae69e39.png#align=left&display=inline&height=408&margin=%5Bobject%20Object%5D&name=image.png&originHeight=815&originWidth=1042&size=59188&status=done&style=none&width=521" alt="image.png"><br>这个时候在功能 test2 分支上进行开发， 后续提交了 2 次在<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619521465717-a0c94e36-c120-4651-9027-ec2286569e52.png#align=left&display=inline&height=394&margin=%5Bobject%20Object%5D&name=image.png&originHeight=788&originWidth=611&size=51553&status=done&style=none&width=305.5" alt="image.png"><br>可是与此同时 master 分支上也有新的 2 次提交 <code>6166603ce32</code>和 <code>e45069850e1</code>如下图：<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619521612165-b46acf0b-2ad0-47d6-8bc8-3e2e5aff82fb.png#align=left&display=inline&height=397&margin=%5Bobject%20Object%5D&name=image.png&originHeight=793&originWidth=602&size=51510&status=done&style=none&width=301" alt="image.png"></p>
+<p>所以此时正确的操作应该是在创建 PR 之后，应该先 rebase,如果有冲突需要在本地解决冲突后，提交解决冲突的分支，然后再 merge 到目标分支。<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619523062516-4dd6654c-1608-4511-9be5-037ab114db27.png#align=left&display=inline&height=412&margin=%5Bobject%20Object%5D&name=image.png&originHeight=823&originWidth=1027&size=63993&status=done&style=none&width=513.5" alt="image.png"></p>
+<p>解决冲突后提交，然后执行 rebase 操作</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619524381292-931db81e-960a-4718-a3e4-036567ba88eb.png#align=left&display=inline&height=316&margin=%5Bobject%20Object%5D&name=image.png&originHeight=632&originWidth=851&size=35600&status=done&style=none&width=425.5" alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619521963261-8ac3dbc0-944a-435a-84c6-7d681f96192f.png#align=left&display=inline&height=507&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1014&originWidth=751&size=111982&status=done&style=none&width=375.5" alt="image.png"></p>
+
+        </div>
+
+        <div class="article-nav">
             
-                <div class="comments-container">
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2021/04/12/yq/oi71k3/"
+                    >
+                        <span class="post-nav-title-item">bios setting for mac</span><span class="post-nav-item">Next posts</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
     
         
     <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
@@ -162,7 +222,6 @@
 
     
 </div>
-            
         </div>
     </div>
 </div>
@@ -219,6 +278,12 @@
     <!-- page aside -->
     <aside class="page-aside">
         
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        
+    </div>
+</div>
+        
     </aside>
 
 </div>
@@ -266,6 +331,15 @@
 
 
 
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
 
 
 
