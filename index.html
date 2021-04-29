@@ -1,565 +1,789 @@
+
+
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
 <head>
-    <meta charset="utf-8">
-    <meta name="referrer" content="no-referrer" />
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="backend;java;typescript;graphql;fullstack">
+  <meta name="author" content="TJ">
+  <meta name="keywords" content="backend;java;typescript;graphql;fullstack">
+  
+  <title>TJ&#39;s Blog</title>
 
-    
-    <title>
-        TJ&#39;s Blog
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="manifest" href="/manifest.json">
-    
-        <link rel="shortcut icon" href="/images/favicon.png">
-    
-    
-<link rel="stylesheet" href="/css/style.css">
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
-    <script id="hexo-configurations">
-    let CONFIG = {"hostname":"voox.cc","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"ILS","repository":"voox.cc"}};
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"voox.cc","root":"/","version":"1.8.10","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
   </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
-<div class="page-container">
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>TJ's Blog</strong>&nbsp;</a>
 
-    <header class="page-header">
-        <div class="header-progress"></div>
-    </header>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-    <main class="page-main">
-
-        <div class="page-main-content">
-
-            <div class="page-main-content-top">
-                <header class="header-wrapper">
-
-    <div class="header-content">
-
-        <a class="logo-title" href="/">
-            TJ&#39;s Blog
-        </a>
-
-        <ul class="menu-list">
-            
-                <li class="menu-item">
-                    <a class="active"
-                       href="/"
-                    >
-                        HOME
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/archives"
-                    >
-                        ARCHIVES
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/projects"
-                    >
-                        PROJECTS
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/about"
-                    >
-                        ABOUT
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       target="_blank" rel="noopener" href="https://github.com/aooppo"
-                    >
-                        GITHUB
-                    </a>
-                </li>
-            
-        </ul>
-
-        <div class="menu-bar">
-            <div class="menu-bar-middle"></div>
-        </div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                <li class="drawer-menu-item">
-                    <a class="active"
-                       href="/">HOME</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/archives">ARCHIVES</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/projects">PROJECTS</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/about">ABOUT</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       target="_blank" rel="noopener" href="https://github.com/aooppo">GITHUB</a>
-                </li>
-            
-        </ul>
-    </div>
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/banner1.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Welcome TJ's Blog">
+              
+                Welcome TJ's Blog
+              
+            </span>
 
-    <div class="window-mask"></div>
+            
+          </div>
 
-</header>
-
-
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
             </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
 
-            <div class="page-main-content-middle">
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
 
-                <main class="main-content normal-code-theme">
 
-                    
-                        <div class="home-content-container fade-in-down-animation">
-    <ul class="home-article-list">
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         
-            <li class="home-article-item">
+        <a href="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/" target="_self">
+          Netty模型
+        </a>
+      </h1>
 
-                <h3 class="home-article-title">
-                    <a href="/2021/04/28/yq/ywflt3/">
-                        
-                        重新认识NIO
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        NIOnon-blocking io
-1. 三大组件1.1 Channel &amp; Bufferchannel 有一点类似于 stream，它就是读写数据的双向通道，可以从 channel 中将数据读入 buffer，也可以将 buffer 的数据写入到 channel 中，而之前的 st...
-                    
-                </div>
-
-                <div class="home-article-meta-info">
-                    <div class="article-date">
-                        <span><i class="fa fa-pencil-square-o"></i> 2021-04-28</span>
-                        
-                            
-                            
-                        
-                    </div>
-                    
-                    <a href="/2021/04/28/yq/ywflt3/">Read more <i class="fa fa-angle-right"></i></a>
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                <h3 class="home-article-title">
-                    <a href="/2021/04/28/yq/rauyu5/">
-                        
-                        重置Navicat试用时间
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        VersionNavicat Premium 15 (Windows)
-@echo offecho Delete HKEY_CURRENT_USER\Software\PremiumSoft\NavicatPremium\Registration15XCSecho waiting......r...
-                    
-                </div>
-
-                <div class="home-article-meta-info">
-                    <div class="article-date">
-                        <span><i class="fa fa-pencil-square-o"></i> 2021-04-28</span>
-                        
-                            
-                            
-                        
-                    </div>
-                    
-                    <a href="/2021/04/28/yq/rauyu5/">Read more <i class="fa fa-angle-right"></i></a>
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                <h3 class="home-article-title">
-                    <a href="/2021/04/12/yq/oi71k3/">
-                        
-                        bios setting for mac
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        #AMD BIOS SettingsNote: Most of these options may not be present in your firmware, we recommend matching up as closely as possible but don’t be too...
-                    
-                </div>
-
-                <div class="home-article-meta-info">
-                    <div class="article-date">
-                        <span><i class="fa fa-pencil-square-o"></i> 2021-04-12</span>
-                        
-                            
-                            
-                        
-                    </div>
-                    
-                    <a href="/2021/04/12/yq/oi71k3/">Read more <i class="fa fa-angle-right"></i></a>
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                <h3 class="home-article-title">
-                    <a href="/2021/03/30/yq/skdzb0/">
-                        
-                        spring-boot 自动装配
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        @SpringBootApplicationpublic class DemoApplication &#123;    public static void main(String[] args) &#123;        ConfigurableApplicationContext co...
-                    
-                </div>
-
-                <div class="home-article-meta-info">
-                    <div class="article-date">
-                        <span><i class="fa fa-pencil-square-o"></i> 2021-03-30</span>
-                        
-                            
-                            
-                        
-                    </div>
-                    
-                    <a href="/2021/03/30/yq/skdzb0/">Read more <i class="fa fa-angle-right"></i></a>
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                <h3 class="home-article-title">
-                    <a href="/2021/03/17/motherboard/">
-                        
-                        motherboard
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        amd x570
-
-
-
-                    
-                </div>
-
-                <div class="home-article-meta-info">
-                    <div class="article-date">
-                        <span><i class="fa fa-pencil-square-o"></i> 2021-03-17</span>
-                        
-                            
-                            
-                        
-                    </div>
-                    
-                    <a href="/2021/03/17/motherboard/">Read more <i class="fa fa-angle-right"></i></a>
-                </div>
-            </li>
-        
-            <li class="home-article-item">
-
-                <h3 class="home-article-title">
-                    <a href="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/">
-                        
-                        Netty模型
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        提及Netty模型，不得不从Reactor 模式说起， Reactor模式是基于事件驱动，特别适合处理海量的 I/O 事件。
+      <p class="index-excerpt">
+        <a href="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/" target="_self">
+          
+          
+            
+          
+          提及Netty模型，不得不从Reactor 模式说起， Reactor模式是基于事件驱动，特别适合处理海量的 I/O 事件。
 Reactor 模式下，又细分为：
 
 单线程模型
 多线程模型
 主从多线程模型
 
-单线程模型Reactor 单线程模型，指的是所有的 IO 操作都在同一个 NIO 线程上...
-                    
-                </div>
+单线程模型Reactor 单线程模型，指的是所有的 IO 操作都在同一个 NIO 线程上面完成，NIO 线程的职责如下：
 
-                <div class="home-article-meta-info">
-                    <div class="article-date">
-                        <span><i class="fa fa-pencil-square-o"></i> 2020-10-29</span>
-                        
-                            
-                            
-                        
-                    </div>
-                    
-                    <a href="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/">Read more <i class="fa fa-angle-right"></i></a>
-                </div>
-            </li>
+作为 NIO 服务端，接收客户端的 TCP 连接；
+
+作为 NIO 客
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
         
-            <li class="home-article-item">
-
-                <h3 class="home-article-title">
-                    <a href="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/">
-                        
-                        Linux五种IO模型
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        Linux下主要的IO主要分为：阻塞IO(Blocking IO)，非阻塞IO(Non-blocking IO)，同步IO(Sync IO)和异步IO(Async IO)。同步：调用端会一直等待服务端响应，直到返回结果。异步：调用端发起调用之后不会立刻返回，不会等待服务端响应。服务端通过通知机...
-                    
-                </div>
-
-                <div class="home-article-meta-info">
-                    <div class="article-date">
-                        <span><i class="fa fa-pencil-square-o"></i> 2020-10-27</span>
-                        
-                            
-                            
-                        
-                    </div>
-                    
-                    <a href="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/">Read more <i class="fa fa-angle-right"></i></a>
-                </div>
-            </li>
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-29 17:00" pubdate>
+              2020-10-29
+            </time>
+          </div>
         
-            <li class="home-article-item">
-
-                <h3 class="home-article-title">
-                    <a href="/2020/10/23/Linux%20%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4/">
-                        
-                        Linux 用户空间与内核空间
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        linux中的用户空间与内核空间
-在操作系统中，虚拟内存通常会被分成用户空间（英语：User space，又译为使用者空间），与核心空间（英语：Kernel space，又译为内核空间）这两个区块。这是存储器保护机制中的一环。内核、核心扩充（kernel extensions）、以及驱动程序，...
-                    
-                </div>
-
-                <div class="home-article-meta-info">
-                    <div class="article-date">
-                        <span><i class="fa fa-pencil-square-o"></i> 2020-10-23</span>
-                        
-                            
-                            
-                        
-                    </div>
-                    
-                    <a href="/2020/10/23/Linux%20%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4/">Read more <i class="fa fa-angle-right"></i></a>
-                </div>
-            </li>
         
-            <li class="home-article-item">
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/netty/">netty</a>
+            
+              <a href="/tags/nio/">nio</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
-                <h3 class="home-article-title">
-                    <a href="/2020/10/13/kubesphere-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2/">
-                        
-                        kubesphere 安装与部署
-                    </a>
-                </h3>
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/" target="_self">
+          Linux五种IO模型
+        </a>
+      </h1>
 
-                <div class="home-article-content markdown-body">
-                    
-                        
+      <p class="index-excerpt">
+        <a href="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/" target="_self">
+          
+          
+            
+          
+          Linux下主要的IO主要分为：阻塞IO(Blocking IO)，非阻塞IO(Non-blocking IO)，同步IO(Sync IO)和异步IO(Async IO)。同步：调用端会一直等待服务端响应，直到返回结果。异步：调用端发起调用之后不会立刻返回，不会等待服务端响应。服务端通过通知机制或者回调函数来通知客户端。阻塞：服务端返回结果之前，客户端线程会被挂起，此时线程不可被CPU调度，线程暂
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-27 10:25" pubdate>
+              2020-10-27
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">linux</a>
+            
+              <a href="/tags/io/">io</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/10/23/Linux%20%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4/" target="_self">
+          Linux 用户空间与内核空间
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/10/23/Linux%20%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4/" target="_self">
+          
+          
+            
+          
+          linux中的用户空间与内核空间
+在操作系统中，虚拟内存通常会被分成用户空间（英语：User space，又译为使用者空间），与核心空间（英语：Kernel space，又译为内核空间）这两个区块。这是存储器保护机制中的一环。内核、核心扩充（kernel extensions）、以及驱动程序，运行在核心空间上。而其他的应用程序，则运行在用户空间上。所有运行在用户空间的应用程序，都被统称为用户级（u
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-23 22:12" pubdate>
+              2020-10-23
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">linux</a>
+            
+              <a href="/tags/karnel/">karnel</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/10/13/kubesphere-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2/" target="_self">
+          kubesphere 安装与部署
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/10/13/kubesphere-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2/" target="_self">
+          
+          
+            
+          
+          
 前提条件
 
-Kubernetes版本： 1.15.x ≤ K8s version ≤ 1.17.x；Helm版本： 2.10.0 ≤ Helm Version ＜ 3.0.0，建议使用 Helm 2.16.2（不支持 helm 2.16.0 #6894），且已安装了 Tiller，参考 如何...
-                    
-                </div>
+Kubernetes版本： 1.15.x ≤ K8s version ≤ 1.17.x；Helm版本： 2.10.0 ≤ Helm Version ＜ 3.0.0，建议使用 Helm 2.16.2（不支持 helm 2.16.0 #6894），且已安装了 Tiller，参考 如何安装与配置 Helm （预计 3.0 支持 Helm v3）；集群已有默认的存储类型（StorageCla
+        </a>
+      </p>
 
-                <div class="home-article-meta-info">
-                    <div class="article-date">
-                        <span><i class="fa fa-pencil-square-o"></i> 2020-10-13</span>
-                        
-                            
-                            
-                        
-                    </div>
-                    
-                    <a href="/2020/10/13/kubesphere-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2/">Read more <i class="fa fa-angle-right"></i></a>
-                </div>
-            </li>
+      <div class="index-btm post-metas">
         
-            <li class="home-article-item">
-
-                <h3 class="home-article-title">
-                    <a href="/2020/10/12/K8s%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/">
-                        
-                        K8s Devops环境搭建准备
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        1.安装依赖 vagrant 和virtual box创建文件 vagrantfile以下是文件内容：
-Vagrant.configure(&quot;2&quot;) do |config|   (1..3).each do |i|        config.vm.define &quot...
-                    
-                </div>
-
-                <div class="home-article-meta-info">
-                    <div class="article-date">
-                        <span><i class="fa fa-pencil-square-o"></i> 2020-10-12</span>
-                        
-                            
-                            
-                        
-                    </div>
-                    
-                    <a href="/2020/10/12/K8s%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/">Read more <i class="fa fa-angle-right"></i></a>
-                </div>
-            </li>
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-13 15:39" pubdate>
+              2020-10-13
+            </time>
+          </div>
         
-    </ul>
-
-    <div class="home-paginator">
-        <div class="paginator">
-    
-
-    
-        <a class="next btn"
-           href="/page/2/"
-        >Next</a>
-    
-</div>
-
-    </div>
-</div>
-
-
-                    
-
-                </main>
-
-            </div>
-
-            <div class="page-main-content-bottom">
-                <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy; 2021 <i class="fa fa-heart-o"></i> <a href="/">TJ</a> <span style="font-size: smaller;">themes by ils</span>
-        </div>
         
-   
-    </div>
-</footer>
-            </div>
-        </div>
-    </main>
-
-    <div class="sidebar-tools">
-        <div class="tools-container">
-    <ul class="tools-list">
         
-            <li class="search popup-trigger">
-                <i class="fa fa-search"></i>
-            </li>
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
             
-<script src="/js/local-search.js"></script>
-
+              <a href="/tags/docker/">docker</a>
+            
+              <a href="/tags/k8s/">k8s</a>
+            
+              <a href="/tags/k8s-cluster/">k8s-cluster</a>
+            
+          </div>
         
-        <li class="mode-toggle">
-            <i class="fa fa-moon-o"></i>
-        </li>
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
         
-        <li class="page-aside-toggle">
-            <i class="fa fa-bars"></i>
-        </li>
+        <a href="/2020/10/12/K8s%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/" target="_self">
+          K8s Devops环境搭建准备
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/10/12/K8s%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87/" target="_self">
+          
+          
+            
+          
+          1.安装依赖 vagrant 和virtual box创建文件 vagrantfile以下是文件内容：
+123456789101112131415161718192021222324252627Vagrant.configure(&quot;2&quot;) do |config|   (1..3).each do |i|        config.vm.define &quot;k8s-nod
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
         
-            <li class="scroll-to-top">
-                <i class="fa fa-caret-up"></i>
-            </li>
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-12 17:26" pubdate>
+              2020-10-12
+            </time>
+          </div>
         
-    </ul>
-</div>
-
-    </div>
-
-    <!-- page aside -->
-    <aside class="page-aside">
         
-    </aside>
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/docker/">docker</a>
+            
+              <a href="/tags/k8s/">k8s</a>
+            
+              <a href="/tags/k8s-cluster/">k8s-cluster</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
-</div>
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/10/09/Sentinel-%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
+          Sentinel 的使用
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/10/09/Sentinel-%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_self">
+          
+          
+            
+          
+          
+引入 Sentinel 依赖如果您的应用使用了 Maven，则在 pom.xml 文件中加入以下代码即可：1234&lt;dependency&gt;    &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;    &lt;artifactId&gt;spring-cloud-starter-alibaba-sentinel&lt;/artifact
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-09 17:30" pubdate>
+              2020-10-09
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/10/08/%E4%BB%8E0%E5%88%B01%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AARPC%E5%AE%9E%E7%8E%B0/" target="_self">
+          从0到1手写一个RPC实现
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/10/08/%E4%BB%8E0%E5%88%B01%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AARPC%E5%AE%9E%E7%8E%B0/" target="_self">
+          
+          
+            
+          
+          计划从0到1手写一个RPC的实现我准备把具体实现和想法记录下来，对学习其他RPC框架有一个参考和比较。可能用到的技术栈：
+
+
+spring
 
 
 
-    <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-icon">
-            <i class="fa fa-search"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="Search..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
+netty
+kryo, protobuf, thrift, hessian (序列化和反序列化)
+zookeeper, etcd, redis (服务注册和发现)
+
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-08 13:35" pubdate>
+              2020-10-08
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/rpc/">rpc</a>
+            
+              <a href="/tags/java/">java</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2020/10/08/AQS/" target="_self">
+          AQS
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2020/10/08/AQS/" target="_self">
+          
+          
+            
+          
+          1 ReentrantLock1.1 ReentrantLock特性概览ReentrantLock意思为可重入锁，指的是一个线程能够对一个临界资源重复加锁。为了帮助大家更好地理解ReentrantLock的特性，我们先将ReentrantLock跟常用的Synchronized进行比较，其特性如下:
+1234567891011121314151617181920212223242526272829
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-08 12:48" pubdate>
+              2020-10-08
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2019/03/01/update-by-partition/" target="_self">
+          update by partition
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2019/03/01/update-by-partition/" target="_self">
+          
+          
+            
+          
+          sql update top 5
+123456789SELECT  ROW_NUMBER() OVER (PARTITION BY col1, col2    ORDER BY x desc) AS r,  t.id  FROM    some_table t  where condition = &#x27;xxx&#x27;) Awhere A.r &lt; 5;
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-03-01 15:25" pubdate>
+              2019-03-01
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/sql/">sql</a>
+            
+              <a href="/tags/postgresql/">postgresql</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2018/08/08/Docker%E4%B8%ADexec%E5%92%8Cattach%E5%8C%BA%E5%88%AB/" target="_self">
+          Docker中exec和attach区别
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2018/08/08/Docker%E4%B8%ADexec%E5%92%8Cattach%E5%8C%BA%E5%88%AB/" target="_self">
+          
+          
+            
+          
+          docker attach 执行后会进入到 container 中docker exec 执行后，命令执行返回值并显示到宿主机中。
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-08-08 10:57" pubdate>
+              2018-08-08
+            </time>
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/docker/">docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
             </div>
-            <span class="popup-btn-close">
-                <i class="fa fa-times"></i>
-            </span>
+          </div>
         </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<script src="/js/main.js"></script>
-<script src="/js/header-shrink.js"></script>
-<script src="/js/toggle-mode.js"></script>
-
-
+      </div>
+    
 
     
-<script src="/js/scroll-to-top.js"></script>
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <span>Copyright @2011-present TJ Powered by:hexo theme by: fluid</span>
+
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
 
 
 
 
 
 
-</body>
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?c1b31db7a7ea55c71d92dc4a7cea0cc3";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-</html>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script>'use strict';'serviceWorker'in navigator&&navigator.serviceWorker.register('service-worker.js').then(function(a){a.onupdatefound=function(){var b=a.installing;b.onstatechange=function(){switch(b.state){case'installed':navigator.serviceWorker.controller?console.log('New or updated content is available.'):console.log('Content is now available offline!');break;case'redundant':console.error('The installing service worker became redundant.');}}}}).catch(function(a){console.error('Error during service worker registration:',a)});
+</script></body></html>

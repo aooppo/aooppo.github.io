@@ -1,177 +1,236 @@
+
+
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
 <head>
-    <meta charset="utf-8">
-    <meta name="referrer" content="no-referrer" />
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="backend;java;typescript;graphql;fullstack">
+  <meta name="author" content="TJ">
+  <meta name="keywords" content="backend;java;typescript;graphql;fullstack">
+  
+  <title>Linux五种IO模型 - TJ&#39;s Blog</title>
 
-    
-    <title>
-        Linux五种IO模型 | TJ&#39;s Blog
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="manifest" href="/manifest.json">
-    
-        <link rel="shortcut icon" href="/images/favicon.png">
-    
-    
-<link rel="stylesheet" href="/css/style.css">
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
-    <script id="hexo-configurations">
-    let CONFIG = {"hostname":"voox.cc","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"ILS","repository":"voox.cc"}};
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"voox.cc","root":"/","version":"1.8.10","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
   </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
-<div class="page-container">
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>TJ's Blog</strong>&nbsp;</a>
 
-    <header class="page-header">
-        <div class="header-progress"></div>
-    </header>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-    <main class="page-main">
-
-        <div class="page-main-content">
-
-            <div class="page-main-content-top">
-                <header class="header-wrapper">
-
-    <div class="header-content">
-
-        <a class="logo-title" href="/">
-            TJ&#39;s Blog
-        </a>
-
-        <ul class="menu-list">
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/"
-                    >
-                        HOME
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/archives"
-                    >
-                        ARCHIVES
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/projects"
-                    >
-                        PROJECTS
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/about"
-                    >
-                        ABOUT
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       target="_blank" rel="noopener" href="https://github.com/aooppo"
-                    >
-                        GITHUB
-                    </a>
-                </li>
-            
-        </ul>
-
-        <div class="menu-bar">
-            <div class="menu-bar-middle"></div>
-        </div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Linux五种IO模型">
+              
+                Linux五种IO模型
+              
+            </span>
+
             
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/">HOME</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/archives">ARCHIVES</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/projects">PROJECTS</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/about">ABOUT</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       target="_blank" rel="noopener" href="https://github.com/aooppo">GITHUB</a>
-                </li>
-            
-        </ul>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-            </div>
-
-            <div class="page-main-content-middle">
-
-                <main class="main-content normal-code-theme">
-
-                    
-                        <div class="fade-in-down-animation">
-    <div class="article-content-container">
-
-        <div class="article-title">
-            <h3><a class="title-hover-animation">Linux五种IO模型</a></h3>
-        </div>
-
-        <div class="meta-info">
-            <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fa fa-calendar-o"></i> 2020-10-27 10:25:21
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-10-27 10:25" pubdate>
+        2020年10月27日 上午
+      </time>
     </span>
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fa fa-tags"></i>
-            <ul>
-                
-                    <li>
-                        <a href="/tags/linux/">linux</a>
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/io/">io</a>
-                    </li>
-                
-            </ul>
-        </span>
-    
-    
-    
-    
+  
 </div>
 
-        </div>
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3k 字
+    </span>
+  
 
-        <div class="article-content markdown-body">
-            <p>Linux下主要的IO主要分为：阻塞IO(Blocking IO)，非阻塞IO(Non-blocking IO)，同步IO(Sync IO)和异步IO(Async IO)。<br>同步：调用端会一直等待服务端响应，直到返回结果。<br>异步：调用端发起调用之后不会立刻返回，不会等待服务端响应。服务端通过通知机制或者回调函数来通知客户端。<br>阻塞：服务端返回结果之前，客户端线程会被挂起，此时线程不可被CPU调度，线程暂停运行。<br>非阻塞：在服务端返回前，函数不会阻塞调用端线程，而会立刻返回。<br>同步异步的区别在于：服务端在拷贝数据时是否阻塞调用端线程；阻塞和非阻塞的区别在于：调用端线程在调用function后是否立刻返回。要理解这些I/O，需要先理解一些基本的概念。</p>
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Linux五种IO模型</h1>
+            
+            <div class="markdown-body">
+              <p>Linux下主要的IO主要分为：阻塞IO(Blocking IO)，非阻塞IO(Non-blocking IO)，同步IO(Sync IO)和异步IO(Async IO)。<br>同步：调用端会一直等待服务端响应，直到返回结果。<br>异步：调用端发起调用之后不会立刻返回，不会等待服务端响应。服务端通过通知机制或者回调函数来通知客户端。<br>阻塞：服务端返回结果之前，客户端线程会被挂起，此时线程不可被CPU调度，线程暂停运行。<br>非阻塞：在服务端返回前，函数不会阻塞调用端线程，而会立刻返回。<br>同步异步的区别在于：服务端在拷贝数据时是否阻塞调用端线程；阻塞和非阻塞的区别在于：调用端线程在调用function后是否立刻返回。要理解这些I/O，需要先理解一些基本的概念。</p>
 <h2 id="用户态和核心态"><a href="#用户态和核心态" class="headerlink" title="用户态和核心态"></a>用户态和核心态</h2><p>Linux系统中分为核心态(Kernel model)和用户态(User model)，CPU会在两个model之间切换。</p>
 <ol>
 <li>核心态代码拥有完全的底层资源控制权限，可以执行任何CPU指令，访问任何内存地址，其占有的处理机是不允许被抢占的。内核态的指令包括：启动I/O，内存清零，修改程序状态字，设置时钟，允许/终止中断和停机。内核态的程序崩溃会导致PC停机。</li>
@@ -208,26 +267,26 @@
 <li>异步I/O (asynchronous I/O)</li>
 </ol>
 <h3 id="阻塞IO模型"><a href="#阻塞IO模型" class="headerlink" title="阻塞IO模型"></a>阻塞IO模型</h3><p>进程会一直阻塞，直到数据拷贝完成 应用程序调用一个IO函数，导致应用程序阻塞，等待数据准备好。数据准备好后，从内核拷贝到用户空间，IO函数返回成功指示。阻塞IO模型图如下所示：</p>
-<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765833.png" class="" title="some description">
+<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765833.png" srcset="/img/loading.gif" lazyload class="" title="some description">
 
 <h4 id="非阻塞IO模型"><a href="#非阻塞IO模型" class="headerlink" title="非阻塞IO模型"></a>非阻塞IO模型</h4><p>通过进程反复调用IO函数，在数据拷贝过程中，进程是阻塞的。模型图如下所示:</p>
-<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765852.png" class="" title="some description">
+<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765852.png" srcset="/img/loading.gif" lazyload class="" title="some description">
 
 <h4 id="IO复用模型"><a href="#IO复用模型" class="headerlink" title="IO复用模型"></a>IO复用模型</h4><p>主要是select和epoll。一个线程可以对多个IO端口进行监听，当socket有读写事件时分发到具体的线程进行处理。模型如下所示：</p>
-<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765870.png" class="" title="some description">
+<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765870.png" srcset="/img/loading.gif" lazyload class="" title="some description">
 
 <h4 id="信号驱动IO模型"><a href="#信号驱动IO模型" class="headerlink" title="信号驱动IO模型"></a>信号驱动IO模型</h4><p>信号驱动式I/O：首先我们允许Socket进行信号驱动IO,并安装一个信号处理函数，进程继续运行并不阻塞。当数据准备好时，进程会收到一个SIGIO信号，可以在信号处理函数中调用I/O操作函数处理数据。过程如下图所示：</p>
-<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765886.png" class="" title="some description">
+<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765886.png" srcset="/img/loading.gif" lazyload class="" title="some description">
 
 <h4 id="异步IO模型"><a href="#异步IO模型" class="headerlink" title="异步IO模型"></a>异步IO模型</h4><p>相对于同步IO，异步IO不是顺序执行。用户进程进行aio_read系统调用之后，无论内核数据是否准备好，都会直接返回给用户进程，然后用户态进程可以去做别的事情。等到socket数据准备好了，内核直接复制数据给进程，然后从内核向进程发送通知。IO两个阶段，进程都是非阻塞的。异步过程如下图所示：</p>
-<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765906.png" class="" title="some description">
+<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765906.png" srcset="/img/loading.gif" lazyload class="" title="some description">
 
 <h2 id="五种IO模型比较"><a href="#五种IO模型比较" class="headerlink" title="五种IO模型比较"></a>五种IO模型比较</h2><h3 id="阻塞IO和非阻塞IO的区别"><a href="#阻塞IO和非阻塞IO的区别" class="headerlink" title="阻塞IO和非阻塞IO的区别"></a>阻塞IO和非阻塞IO的区别</h3><p>调用阻塞IO后进程会一直等待对应的进程完成，而非阻塞IO不会等待对应的进程完成，在kernel还在准备数据的情况下直接返回。 同步IO和异步IO的区别<br>首先看一下POSIX中对这两个IO的定义：</p>
 <blockquote>
 <p>A synchronous I/O operation causes the requesting process to be blocked until that I/O operation completes;<br>An asynchronous I/O operation does not cause the requesting process to be blocked;</p>
 </blockquote>
 <p><strong>两者的区别就在于synchronous IO做”IO operation”的时候会将process阻塞。</strong>按照这个定义，之前所述的blocking IO，non-blocking IO，IO multiplexing都属于synchronous IO。注意到non-blocking IO会一直轮询(polling)，这个过程是没有阻塞的，但是recvfrom阶段blocking IO,non-blocking IO和IO multiplexing都是阻塞的。<br>而asynchronous IO则不一样，当进程发起IO 操作之后，就直接返回再也不理睬了，直到kernel发送一个信号，告诉进程说IO完成。在这整个过程中，进程完全没有被block。</p>
-<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765975.png" class="" title="some description">
+<img src="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/image-1603765975.png" srcset="/img/loading.gif" lazyload class="" title="some description">
 
 
 <h2 id="IO复用之select、poll、epoll简介"><a href="#IO复用之select、poll、epoll简介" class="headerlink" title="IO复用之select、poll、epoll简介"></a>IO复用之select、poll、epoll简介</h2><hr>
@@ -281,182 +340,222 @@
 <p><a target="_blank" rel="noopener" href="https://wangpengcheng.github.io/2019/11/10/unix_network_programming_01/">Unix网络编程</a></p>
 <p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/File_descriptor">File descriptor</a></p>
 
-        </div>
-
-        <div class="article-nav">
-            
-                <div class="article-prev">
-                    <a class="prev btn"
-                       rel="prev"
-                       href="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/"
-                    >
-                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">Netty模型</span><span class="post-nav-item">Prev posts</span>
-                    </a>
-                </div>
-            
-            
-                <div class="article-next">
-                    <a class="next btn"
-                       rel="next"
-                       href="/2020/10/23/Linux%20%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4/"
-                    >
-                        <span class="post-nav-title-item">Linux 用户空间与内核空间</span><span class="post-nav-item">Next posts</span> <i class="fa fa-chevron-right"></i>
-                    </a>
-                </div>
-            
-        </div>
-
-        <div class="comment-container">
-            <div class="comments-container">
-    
-        
-    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-    <script src="/js/md5.js"></script>
-    <div id="gitalk-container"></div>
-    <script>
-        const gitalk = new Gitalk({
-            clientID: '465dd7495d4c092fc15f',
-            clientSecret: '73f56b04a04b186b8131217d24b4a7f56c0036f0',
-            repo: 'comments',
-            owner: 'aooppo',
-            admin: ['aooppo'],
-            id: md5(location.pathname),
-            language: ''
-        })
-        gitalk.render('gitalk-container')
-    </script>
-
-    
-</div>
-        </div>
-    </div>
-</div>
-
-
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
                     
-
-                </main>
-
+                      <a class="hover-with-bg" href="/tags/linux/">linux</a>
+                    
+                      <a class="hover-with-bg" href="/tags/io/">io</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Netty模型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/23/Linux%20%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%86%85%E6%A0%B8%E7%A9%BA%E9%97%B4/">
+                        <span class="hidden-mobile">Linux 用户空间与内核空间</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
 
-            <div class="page-main-content-bottom">
-                <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy; 2021 <i class="fa fa-heart-o"></i> <a href="/">TJ</a> <span style="font-size: smaller;">themes by ils</span>
-        </div>
-        
-   
-    </div>
-</footer>
-            </div>
-        </div>
-    </main>
-
-    <div class="sidebar-tools">
-        <div class="tools-container">
-    <ul class="tools-list">
-        
-            <li class="search popup-trigger">
-                <i class="fa fa-search"></i>
-            </li>
             
-<script src="/js/local-search.js"></script>
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
 
-        
-        <li class="mode-toggle">
-            <i class="fa fa-moon-o"></i>
-        </li>
-        
-        <li class="page-aside-toggle">
-            <i class="fa fa-bars"></i>
-        </li>
-        
-            <li class="scroll-to-top">
-                <i class="fa fa-caret-up"></i>
-            </li>
-        
-    </ul>
-</div>
-
-    </div>
-
-    <!-- page aside -->
-    <aside class="page-aside">
-        
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E6%80%81%E5%92%8C%E6%A0%B8%E5%BF%83%E6%80%81"><span class="nav-number">1.</span> <span class="nav-text">用户态和核心态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E6%80%81%E5%92%8C%E6%A0%B8%E5%BF%83%E6%80%81%E7%9A%84%E5%88%87%E6%8D%A2"><span class="nav-number">1.1.</span> <span class="nav-text">用户态和核心态的切换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%88%87%E6%8D%A2"><span class="nav-number">2.</span> <span class="nav-text">进程切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%98%BB%E5%A1%9E"><span class="nav-number">3.</span> <span class="nav-text">进程阻塞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6-fd-File-Descriptor"><span class="nav-number">4.</span> <span class="nav-text">文件描述符(fd, File Descriptor)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98I-O"><span class="nav-number">5.</span> <span class="nav-text">缓存I&#x2F;O</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%93%E5%AD%98IO%E7%9A%84%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-number">5.0.1.</span> <span class="nav-text">缓存IO的缺点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E4%B8%8B%E7%9A%84%E4%BA%94%E7%A7%8DI-O%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text">Linux下的五种I&#x2F;O模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BB%E5%A1%9EIO%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.1.</span> <span class="nav-text">阻塞IO模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9EIO%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.1.1.</span> <span class="nav-text">非阻塞IO模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IO%E5%A4%8D%E7%94%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.1.2.</span> <span class="nav-text">IO复用模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8IO%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.1.3.</span> <span class="nav-text">信号驱动IO模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5IO%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.1.4.</span> <span class="nav-text">异步IO模型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B%E6%AF%94%E8%BE%83"><span class="nav-number">7.</span> <span class="nav-text">五种IO模型比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%BB%E5%A1%9EIO%E5%92%8C%E9%9D%9E%E9%98%BB%E5%A1%9EIO%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">7.1.</span> <span class="nav-text">阻塞IO和非阻塞IO的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IO%E5%A4%8D%E7%94%A8%E4%B9%8Bselect%E3%80%81poll%E3%80%81epoll%E7%AE%80%E4%BB%8B"><span class="nav-number">8.</span> <span class="nav-text">IO复用之select、poll、epoll简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#select"><span class="nav-number">8.0.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#poll"><span class="nav-number">8.0.2.</span> <span class="nav-text">poll</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#epoll"><span class="nav-number">8.0.3.</span> <span class="nav-text">epoll</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select%E3%80%81poll%E3%80%81epoll%E5%8C%BA%E5%88%AB%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-number">8.1.</span> <span class="nav-text">select、poll、epoll区别总结：</span></a></li></ol></li></ol>
-    </div>
-</div>
-        
-    </aside>
-
-</div>
-
-
-
-    <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-icon">
-            <i class="fa fa-search"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="Search..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="popup-btn-close">
-                <i class="fa fa-times"></i>
-            </span>
+              </article>
+            
+          </article>
         </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
+      </div>
     </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
-
-
-<script src="/js/main.js"></script>
-<script src="/js/header-shrink.js"></script>
-<script src="/js/toggle-mode.js"></script>
-
-
-
+      </div>
     
-<script src="/js/scroll-to-top.js"></script>
+  </div>
+</div>
 
+<!-- Custom -->
 
-
-
-
-    
-        
-<script src="/js/code-copy.js"></script>
 
     
 
     
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <span>Copyright @2011-present TJ Powered by:hexo theme by: fluid</span>
+
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
 
 
 </body>
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?c1b31db7a7ea55c71d92dc4a7cea0cc3";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
 </html>

@@ -1,177 +1,236 @@
+
+
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
 <head>
-    <meta charset="utf-8">
-    <meta name="referrer" content="no-referrer" />
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="backend;java;typescript;graphql;fullstack">
+  <meta name="author" content="TJ">
+  <meta name="keywords" content="backend;java;typescript;graphql;fullstack">
+  
+  <title>Netty模型 - TJ&#39;s Blog</title>
 
-    
-    <title>
-        Netty模型 | TJ&#39;s Blog
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="manifest" href="/manifest.json">
-    
-        <link rel="shortcut icon" href="/images/favicon.png">
-    
-    
-<link rel="stylesheet" href="/css/style.css">
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
-    <script id="hexo-configurations">
-    let CONFIG = {"hostname":"voox.cc","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":false},"themeInfo":{"name":"ILS","version":"2.0.2","author":"ILS","repository":"voox.cc"}};
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"voox.cc","root":"/","version":"1.8.10","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
   </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 
 <body>
-<div class="page-container">
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>TJ's Blog</strong>&nbsp;</a>
 
-    <header class="page-header">
-        <div class="header-progress"></div>
-    </header>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-    <main class="page-main">
-
-        <div class="page-main-content">
-
-            <div class="page-main-content-top">
-                <header class="header-wrapper">
-
-    <div class="header-content">
-
-        <a class="logo-title" href="/">
-            TJ&#39;s Blog
-        </a>
-
-        <ul class="menu-list">
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/"
-                    >
-                        HOME
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/archives"
-                    >
-                        ARCHIVES
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/projects"
-                    >
-                        PROJECTS
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       href="/about"
-                    >
-                        ABOUT
-                    </a>
-                </li>
-            
-                <li class="menu-item">
-                    <a class=""
-                       target="_blank" rel="noopener" href="https://github.com/aooppo"
-                    >
-                        GITHUB
-                    </a>
-                </li>
-            
-        </ul>
-
-        <div class="menu-bar">
-            <div class="menu-bar-middle"></div>
-        </div>
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Netty模型">
+              
+                Netty模型
+              
+            </span>
+
             
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/">HOME</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/archives">ARCHIVES</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/projects">PROJECTS</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       href="/about">ABOUT</a>
-                </li>
-            
-                <li class="drawer-menu-item">
-                    <a class=""
-                       target="_blank" rel="noopener" href="https://github.com/aooppo">GITHUB</a>
-                </li>
-            
-        </ul>
-    </div>
-
-    <div class="window-mask"></div>
-
-</header>
-
-
-            </div>
-
-            <div class="page-main-content-middle">
-
-                <main class="main-content normal-code-theme">
-
-                    
-                        <div class="fade-in-down-animation">
-    <div class="article-content-container">
-
-        <div class="article-title">
-            <h3><a class="title-hover-animation">Netty模型</a></h3>
-        </div>
-
-        <div class="meta-info">
-            <div class="article-meta-info">
-    <span class="article-date article-meta-item">
-        <i class="fa fa-calendar-o"></i> 2020-10-29 17:00:25
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-10-29 17:00" pubdate>
+        2020年10月29日 下午
+      </time>
     </span>
-    
-    
-        <span class="article-tags article-meta-item">
-            <i class="fa fa-tags"></i>
-            <ul>
-                
-                    <li>
-                        <a href="/tags/netty/">netty</a>
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/nio/">nio</a>
-                    </li>
-                
-            </ul>
-        </span>
-    
-    
-    
-    
+  
 </div>
 
-        </div>
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
 
-        <div class="article-content markdown-body">
-            <p>提及Netty模型，不得不从Reactor 模式说起， Reactor模式是基于事件驱动，特别适合处理海量的 I/O 事件。</p>
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Netty模型</h1>
+            
+            <div class="markdown-body">
+              <p>提及Netty模型，不得不从Reactor 模式说起， Reactor模式是基于事件驱动，特别适合处理海量的 I/O 事件。</p>
 <p>Reactor 模式下，又细分为：</p>
 <ul>
 <li>单线程模型</li>
@@ -190,7 +249,7 @@
 </li>
 </ul>
 <p>Reactor 单线程模型示意图如下所示：</p>
-<img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603982976.png" class="" title="some description">
+<img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603982976.png" srcset="/img/loading.gif" lazyload class="" title="some description">
 
 <p>由于 Reactor 模式使用的是异步非阻塞 IO，所有的 IO 操作都不会导致阻塞，理论上一个线程可以独立处理所有 IO 相关的操作。从架构层面看，一个 NIO 线程确实可以完成其承担的职责。例如，通过 Acceptor 类接收客户端的 TCP 连接请求消息，链路建立成功之后，通过 Dispatch 将对应的 ByteBuffer 派发到指定的 Handler 上进行消息解码。用户线程可以通过消息编码通过 NIO 线程将消息发送给客户端。</p>
 <p>对于一些小容量应用场景，可以使用单线程模型。但是对于高负载、大并发的应用场景却不合适，主要原因如下：</p>
@@ -204,7 +263,7 @@
 </ul>
 <p>为了解决这些问题，演进出了 Reactor 多线程模型，下面我们一起学习下 Reactor 多线程模型。</p>
 <h3 id="多线程模型"><a href="#多线程模型" class="headerlink" title="多线程模型"></a>多线程模型</h3><p>Rector 多线程模型与单线程模型最大的区别就是有一组 NIO 线程处理 IO 操作，它的原理图如下：</p>
-<img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603982991.png" class="" title="some description">
+<img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603982991.png" srcset="/img/loading.gif" lazyload class="" title="some description">
 <p>Reactor 多线程模型的特点：</p>
 <ul>
 <li><p>有专门一个 NIO 线程 -Acceptor 线程用于监听服务端，接收客户端的 TCP 连接请求；</p>
@@ -217,7 +276,7 @@
 <p>在绝大多数场景下，Reactor 多线程模型都可以满足性能需求；但是，在极个别特殊场景中，一个 NIO 线程负责监听和处理所有的客户端连接可能会存在性能问题。例如并发百万客户端连接，或者服务端需要对客户端握手进行安全认证，但是认证本身非常损耗性能。在这类场景下，单独一个 Acceptor 线程可能会存在性能不足问题，为了解决性能问题，产生了第三种 Reactor 线程模型 - 主从 Reactor 多线程模型。</p>
 <h3 id="主从多线程模型"><a href="#主从多线程模型" class="headerlink" title="主从多线程模型"></a>主从多线程模型</h3><p>主从 Reactor 线程模型的特点是：服务端用于接收客户端连接的不再是个 1 个单独的 NIO 线程，而是一个独立的 NIO 线程池。Acceptor 接收到客户端 TCP 连接请求处理完成后（可能包含接入认证等），将新创建的 SocketChannel 注册到 IO 线程池（sub reactor 线程池）的某个 IO 线程上，由它负责 SocketChannel 的读写和编解码工作。Acceptor 线程池仅仅只用于客户端的登陆、握手和安全认证，一旦链路建立成功，就将链路注册到后端 subReactor 线程池的 IO 线程上，由 IO 线程负责后续的 IO 操作。</p>
 <p>它的线程模型如下图所示：</p>
-<img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603983106.png" class="" title="some description">
+<img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603983106.png" srcset="/img/loading.gif" lazyload class="" title="some description">
 
 <p>利用主从 NIO 线程模型，可以解决 1 个服务端监听线程无法有效处理所有客户端连接的性能不足问题。</p>
 <p>它的工作流程总结如下：</p>
@@ -227,12 +286,12 @@
 <li>步骤 2 完成之后，业务层的链路正式建立，将 SocketChannel 从主线程池的 Reactor 线程的多路复用器上摘除，重新注册到 Sub 线程池的线程上，用于处理 I/O 的读写操作。</li>
 </ul>
 <h3 id="Netty-线程模型"><a href="#Netty-线程模型" class="headerlink" title="Netty 线程模型"></a>Netty 线程模型</h3><h4 id="服务端线程模型"><a href="#服务端线程模型" class="headerlink" title="服务端线程模型"></a>服务端线程模型</h4><p>一种比较流行的做法是服务端监听线程和 IO 线程分离，类似于 Reactor 的多线程模型，它的工作原理图如下：</p>
-<img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603983165.png" class="" title="netty thread mode">
+<img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603983165.png" srcset="/img/loading.gif" lazyload class="" title="netty thread mode">
 <p>下面我们结合 Netty 的源码，对服务端创建线程工作流程进行介绍：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    NioEventLoopGroup bossGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">    NioEventLoopGroup workerGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ServerBootstrap serverBootstrap = <span class="keyword">new</span> ServerBootstrap();</span><br><span class="line">        serverBootstrap.group(bossGroup, workerGroup)</span><br><span class="line">                .channel(NioServerSocketChannel.class)</span><br><span class="line">                .option(ChannelOption.SO_BACKLOG, <span class="number">128</span>)</span><br><span class="line">                .childOption(ChannelOption.SO_KEEPALIVE, <span class="keyword">true</span>)</span><br><span class="line">                .childHandler(<span class="keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                        ch.pipeline().addLast(<span class="keyword">new</span> ServerHandler());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">        System.out.println(<span class="string">&quot;server is up!&quot;</span>);</span><br><span class="line">        ChannelFuture channelFuture = serverBootstrap.bind(<span class="number">6668</span>).sync();</span><br><span class="line">        channelFuture.channel().closeFuture().sync();</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        bossGroup.shutdownGracefully();</span><br><span class="line">        workerGroup.shutdownGracefully();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>    NioEventLoopGroup bossGroup = <span class="hljs-keyword">new</span> NioEventLoopGroup();<br>    NioEventLoopGroup workerGroup = <span class="hljs-keyword">new</span> NioEventLoopGroup();<br>    <span class="hljs-keyword">try</span> &#123;<br>        ServerBootstrap serverBootstrap = <span class="hljs-keyword">new</span> ServerBootstrap();<br>        serverBootstrap.group(bossGroup, workerGroup)<br>                .channel(NioServerSocketChannel.class)<br>                .option(ChannelOption.SO_BACKLOG, <span class="hljs-number">128</span>)<br>                .childOption(ChannelOption.SO_KEEPALIVE, <span class="hljs-keyword">true</span>)<br>                .childHandler(<span class="hljs-keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(SocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>                        ch.pipeline().addLast(<span class="hljs-keyword">new</span> ServerHandler());<br>                    &#125;<br>                &#125;);<br>        System.out.println(<span class="hljs-string">&quot;server is up!&quot;</span>);<br>        ChannelFuture channelFuture = serverBootstrap.bind(<span class="hljs-number">6668</span>).sync();<br>        channelFuture.channel().closeFuture().sync();<br><br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        bossGroup.shutdownGracefully();<br>        workerGroup.shutdownGracefully();<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>通常情况下，服务端的创建是在用户进程启动的时候进行，因此一般由 Main 函数或者启动类负责创建，服务端的创建由业务线程负责完成。在创建服务端的时候实例化了 2 个 EventLoopGroup，1 个 EventLoopGroup 实际就是一个 EventLoop 线程组，负责管理 EventLoop 的申请和释放。</p>
 <p>EventLoopGroup 管理的线程数可以通过构造函数设置，如果没有设置，默认取 <code>-Dio.netty.eventLoopThreads</code>，如果该系统参数也没有指定，则为可用的 CPU 内核数 × 2。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">MultithreadEventLoopGroup</span> <span class="keyword">extends</span> <span class="title">MultithreadEventExecutorGroup</span> <span class="keyword">implements</span> <span class="title">EventLoopGroup</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_EVENT_LOOP_THREADS;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        DEFAULT_EVENT_LOOP_THREADS = Math.max(<span class="number">1</span>, SystemPropertyUtil.getInt(</span><br><span class="line">                <span class="string">&quot;io.netty.eventLoopThreads&quot;</span>, NettyRuntime.availableProcessors() * <span class="number">2</span>));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">            logger.debug(<span class="string">&quot;-Dio.netty.eventLoopThreads: &#123;&#125;&quot;</span>, DEFAULT_EVENT_LOOP_THREADS);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MultithreadEventLoopGroup</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">MultithreadEventExecutorGroup</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">EventLoopGroup</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> DEFAULT_EVENT_LOOP_THREADS;<br><br>    <span class="hljs-keyword">static</span> &#123;<br>        DEFAULT_EVENT_LOOP_THREADS = Math.max(<span class="hljs-number">1</span>, SystemPropertyUtil.getInt(<br>                <span class="hljs-string">&quot;io.netty.eventLoopThreads&quot;</span>, NettyRuntime.availableProcessors() * <span class="hljs-number">2</span>));<br><br>        <span class="hljs-keyword">if</span> (logger.isDebugEnabled()) &#123;<br>            logger.debug(<span class="hljs-string">&quot;-Dio.netty.eventLoopThreads: &#123;&#125;&quot;</span>, DEFAULT_EVENT_LOOP_THREADS);<br>        &#125;<br>    &#125;<br><br></code></pre></td></tr></table></figure>
 <p>bossGroup 线程组实际就是 Acceptor 线程池，负责处理客户端的 TCP 连接请求，如果系统只有一个服务端端口需要监听，则建议 bossGroup 线程组线程数设置为 1。</p>
 <p>workerGroup 是真正负责 I/O 读写操作的线程组，通过 ServerBootstrap 的 group 方法进行设置，用于后续的 Channel 绑定。</p>
 <hr>
@@ -245,193 +304,227 @@
 <p>a)在时间片Tirck内执行selector.select()轮询监听IO事件；</p>
 <p>b)处理监听到的就绪IO事件；</p>
 <p>c)执行任务队列taskQueue/delayTaskQueue中的非IO任务。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">switch</span> (selectStrategy.calculateStrategy(selectNowSupplier, hasTasks())) &#123;</span><br><span class="line">                <span class="keyword">case</span> SelectStrategy.CONTINUE:</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                <span class="keyword">case</span> SelectStrategy.SELECT:</span><br><span class="line">                    select(wakenUp.getAndSet(<span class="keyword">false</span>));</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// &#x27;wakenUp.compareAndSet(false, true)&#x27; is always evaluated</span></span><br><span class="line">                    <span class="comment">// before calling &#x27;selector.wakeup()&#x27; to reduce the wake-up</span></span><br><span class="line">                    <span class="comment">// overhead. (Selector.wakeup() is an expensive operation.)</span></span><br><span class="line">                    <span class="comment">//</span></span><br><span class="line">                    <span class="comment">// However, there is a race condition in this approach.</span></span><br><span class="line">                    <span class="comment">// The race condition is triggered when &#x27;wakenUp&#x27; is set to</span></span><br><span class="line">                    <span class="comment">// true too early.</span></span><br><span class="line">                    <span class="comment">//</span></span><br><span class="line">                    <span class="comment">// &#x27;wakenUp&#x27; is set to true too early if:</span></span><br><span class="line">                    <span class="comment">// 1) Selector is waken up between &#x27;wakenUp.set(false)&#x27; and</span></span><br><span class="line">                    <span class="comment">//    &#x27;selector.select(...)&#x27;. (BAD)</span></span><br><span class="line">                    <span class="comment">// 2) Selector is waken up between &#x27;selector.select(...)&#x27; and</span></span><br><span class="line">                    <span class="comment">//    &#x27;if (wakenUp.get()) &#123; ... &#125;&#x27;. (OK)</span></span><br><span class="line">                    <span class="comment">//</span></span><br><span class="line">                    <span class="comment">// In the first case, &#x27;wakenUp&#x27; is set to true and the</span></span><br><span class="line">                    <span class="comment">// following &#x27;selector.select(...)&#x27; will wake up immediately.</span></span><br><span class="line">                    <span class="comment">// Until &#x27;wakenUp&#x27; is set to false again in the next round,</span></span><br><span class="line">                    <span class="comment">// &#x27;wakenUp.compareAndSet(false, true)&#x27; will fail, and therefore</span></span><br><span class="line">                    <span class="comment">// any attempt to wake up the Selector will fail, too, causing</span></span><br><span class="line">                    <span class="comment">// the following &#x27;selector.select(...)&#x27; call to block</span></span><br><span class="line">                    <span class="comment">// unnecessarily.</span></span><br><span class="line">                    <span class="comment">//</span></span><br><span class="line">                    <span class="comment">// To fix this problem, we wake up the selector again if wakenUp</span></span><br><span class="line">                    <span class="comment">// is true immediately after selector.select(...).</span></span><br><span class="line">                    <span class="comment">// It is inefficient in that it wakes up the selector for both</span></span><br><span class="line">                    <span class="comment">// the first case (BAD - wake-up required) and the second case</span></span><br><span class="line">                    <span class="comment">// (OK - no wake-up required).</span></span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (wakenUp.get()) &#123;</span><br><span class="line">                        selector.wakeup();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="comment">// fall through</span></span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cancelledKeys = <span class="number">0</span>;</span><br><span class="line">            needsToSelectAgain = <span class="keyword">false</span>;</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">int</span> ioRatio = <span class="keyword">this</span>.ioRatio;</span><br><span class="line">            <span class="keyword">if</span> (ioRatio == <span class="number">100</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    processSelectedKeys();</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    <span class="comment">// Ensure we always run tasks.</span></span><br><span class="line">                    runAllTasks();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">long</span> ioStartTime = System.nanoTime();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    processSelectedKeys();</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    <span class="comment">// Ensure we always run tasks.</span></span><br><span class="line">                    <span class="keyword">final</span> <span class="keyword">long</span> ioTime = System.nanoTime() - ioStartTime;</span><br><span class="line">                    runAllTasks(ioTime * (<span class="number">100</span> - ioRatio) / ioRatio);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">            handleLoopException(t);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Always handle shutdown even if the loop processing threw an exception.</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (isShuttingDown()) &#123;</span><br><span class="line">                closeAll();</span><br><span class="line">                <span class="keyword">if</span> (confirmShutdown()) &#123;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">            handleLoopException(t);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Override</span><br><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (;;) &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">switch</span> (selectStrategy.calculateStrategy(selectNowSupplier, hasTasks())) &#123;<br>                <span class="hljs-keyword">case</span> SelectStrategy.CONTINUE:<br>                    <span class="hljs-keyword">continue</span>;<br>                <span class="hljs-keyword">case</span> SelectStrategy.SELECT:<br>                    select(wakenUp.getAndSet(<span class="hljs-keyword">false</span>));<br><br>                    <span class="hljs-comment">// &#x27;wakenUp.compareAndSet(false, true)&#x27; is always evaluated</span><br>                    <span class="hljs-comment">// before calling &#x27;selector.wakeup()&#x27; to reduce the wake-up</span><br>                    <span class="hljs-comment">// overhead. (Selector.wakeup() is an expensive operation.)</span><br>                    <span class="hljs-comment">//</span><br>                    <span class="hljs-comment">// However, there is a race condition in this approach.</span><br>                    <span class="hljs-comment">// The race condition is triggered when &#x27;wakenUp&#x27; is set to</span><br>                    <span class="hljs-comment">// true too early.</span><br>                    <span class="hljs-comment">//</span><br>                    <span class="hljs-comment">// &#x27;wakenUp&#x27; is set to true too early if:</span><br>                    <span class="hljs-comment">// 1) Selector is waken up between &#x27;wakenUp.set(false)&#x27; and</span><br>                    <span class="hljs-comment">//    &#x27;selector.select(...)&#x27;. (BAD)</span><br>                    <span class="hljs-comment">// 2) Selector is waken up between &#x27;selector.select(...)&#x27; and</span><br>                    <span class="hljs-comment">//    &#x27;if (wakenUp.get()) &#123; ... &#125;&#x27;. (OK)</span><br>                    <span class="hljs-comment">//</span><br>                    <span class="hljs-comment">// In the first case, &#x27;wakenUp&#x27; is set to true and the</span><br>                    <span class="hljs-comment">// following &#x27;selector.select(...)&#x27; will wake up immediately.</span><br>                    <span class="hljs-comment">// Until &#x27;wakenUp&#x27; is set to false again in the next round,</span><br>                    <span class="hljs-comment">// &#x27;wakenUp.compareAndSet(false, true)&#x27; will fail, and therefore</span><br>                    <span class="hljs-comment">// any attempt to wake up the Selector will fail, too, causing</span><br>                    <span class="hljs-comment">// the following &#x27;selector.select(...)&#x27; call to block</span><br>                    <span class="hljs-comment">// unnecessarily.</span><br>                    <span class="hljs-comment">//</span><br>                    <span class="hljs-comment">// To fix this problem, we wake up the selector again if wakenUp</span><br>                    <span class="hljs-comment">// is true immediately after selector.select(...).</span><br>                    <span class="hljs-comment">// It is inefficient in that it wakes up the selector for both</span><br>                    <span class="hljs-comment">// the first case (BAD - wake-up required) and the second case</span><br>                    <span class="hljs-comment">// (OK - no wake-up required).</span><br><br>                    <span class="hljs-keyword">if</span> (wakenUp.get()) &#123;<br>                        selector.wakeup();<br>                    &#125;<br>                    <span class="hljs-comment">// fall through</span><br>                <span class="hljs-keyword">default</span>:<br>            &#125;<br><br>            cancelledKeys = <span class="hljs-number">0</span>;<br>            needsToSelectAgain = <span class="hljs-keyword">false</span>;<br>            <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> ioRatio = <span class="hljs-keyword">this</span>.ioRatio;<br>            <span class="hljs-keyword">if</span> (ioRatio == <span class="hljs-number">100</span>) &#123;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    processSelectedKeys();<br>                &#125; <span class="hljs-keyword">finally</span> &#123;<br>                    <span class="hljs-comment">// Ensure we always run tasks.</span><br>                    runAllTasks();<br>                &#125;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> ioStartTime = System.nanoTime();<br>                <span class="hljs-keyword">try</span> &#123;<br>                    processSelectedKeys();<br>                &#125; <span class="hljs-keyword">finally</span> &#123;<br>                    <span class="hljs-comment">// Ensure we always run tasks.</span><br>                    <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> ioTime = System.nanoTime() - ioStartTime;<br>                    runAllTasks(ioTime * (<span class="hljs-number">100</span> - ioRatio) / ioRatio);<br>                &#125;<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (Throwable t) &#123;<br>            handleLoopException(t);<br>        &#125;<br>        <span class="hljs-comment">// Always handle shutdown even if the loop processing threw an exception.</span><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">if</span> (isShuttingDown()) &#123;<br>                closeAll();<br>                <span class="hljs-keyword">if</span> (confirmShutdown()) &#123;<br>                    <span class="hljs-keyword">return</span>;<br>                &#125;<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (Throwable t) &#123;<br>            handleLoopException(t);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
 <hr>
-<h3 id="NioEventLoop与NioChannel类关系"><a href="#NioEventLoop与NioChannel类关系" class="headerlink" title="NioEventLoop与NioChannel类关系"></a>NioEventLoop与NioChannel类关系</h3><img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603983917.png" class="" title="some description">
+<h3 id="NioEventLoop与NioChannel类关系"><a href="#NioEventLoop与NioChannel类关系" class="headerlink" title="NioEventLoop与NioChannel类关系"></a>NioEventLoop与NioChannel类关系</h3><img src="/2020/10/29/Netty%E6%A8%A1%E5%9E%8B/image-1603983917.png" srcset="/img/loading.gif" lazyload class="" title="some description">
 <p>一个NioEventLoopGroup下包含多个NioEventLoop</p>
 <p>每个NioEventLoop中包含有一个Selector，一个taskQueue，一个delayedTaskQueue</p>
 <p>每个NioEventLoop的Selector上可以注册监听多个AbstractNioChannel</p>
 <p>每个AbstractNioChannel只会绑定在唯一的NioEventLoop上</p>
 <p>每个AbstractNioChannel都绑定有一个自己的DefaultChannelPipeline</p>
 
-        </div>
-
-        <div class="article-nav">
-            
-                <div class="article-prev">
-                    <a class="prev btn"
-                       rel="prev"
-                       href="/2021/03/17/motherboard/"
-                    >
-                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">motherboard</span><span class="post-nav-item">Prev posts</span>
-                    </a>
-                </div>
-            
-            
-                <div class="article-next">
-                    <a class="next btn"
-                       rel="next"
-                       href="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/"
-                    >
-                        <span class="post-nav-title-item">Linux五种IO模型</span><span class="post-nav-item">Next posts</span> <i class="fa fa-chevron-right"></i>
-                    </a>
-                </div>
-            
-        </div>
-
-        <div class="comment-container">
-            <div class="comments-container">
-    
-        
-    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-    <script src="/js/md5.js"></script>
-    <div id="gitalk-container"></div>
-    <script>
-        const gitalk = new Gitalk({
-            clientID: '465dd7495d4c092fc15f',
-            clientSecret: '73f56b04a04b186b8131217d24b4a7f56c0036f0',
-            repo: 'comments',
-            owner: 'aooppo',
-            admin: ['aooppo'],
-            id: md5(location.pathname),
-            language: ''
-        })
-        gitalk.render('gitalk-container')
-    </script>
-
-    
-</div>
-        </div>
-    </div>
-</div>
-
-
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
                     
-
-                </main>
-
+                      <a class="hover-with-bg" href="/tags/netty/">netty</a>
+                    
+                      <a class="hover-with-bg" href="/tags/nio/">nio</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/27/linux%E4%BA%94%E7%A7%8DIO%E6%A8%A1%E5%9E%8B/">
+                        <span class="hidden-mobile">Linux五种IO模型</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
             </div>
 
-            <div class="page-main-content-bottom">
-                <footer class="footer">
-    <div class="info-container">
-        <div class="copyright-info info-item">
-            &copy; 2021 <i class="fa fa-heart-o"></i> <a href="/">TJ</a> <span style="font-size: smaller;">themes by ils</span>
-        </div>
-        
-   
-    </div>
-</footer>
-            </div>
-        </div>
-    </main>
-
-    <div class="sidebar-tools">
-        <div class="tools-container">
-    <ul class="tools-list">
-        
-            <li class="search popup-trigger">
-                <i class="fa fa-search"></i>
-            </li>
             
-<script src="/js/local-search.js"></script>
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
 
-        
-        <li class="mode-toggle">
-            <i class="fa fa-moon-o"></i>
-        </li>
-        
-        <li class="page-aside-toggle">
-            <i class="fa fa-bars"></i>
-        </li>
-        
-            <li class="scroll-to-top">
-                <i class="fa fa-caret-up"></i>
-            </li>
-        
-    </ul>
-</div>
-
-    </div>
-
-    <!-- page aside -->
-    <aside class="page-aside">
-        
-            <div class="post-toc-wrap">
-    <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">单线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">多线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">主从多线程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">Netty 线程模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.1.</span> <span class="nav-text">服务端线程模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E4%B8%B2%E8%A1%8C%E5%8C%96%E8%AE%BE%E8%AE%A1%E9%81%BF%E5%85%8D%E7%BA%BF%E7%A8%8B%E7%AB%9E%E4%BA%89"><span class="nav-number">4.2.</span> <span class="nav-text">1、串行化设计避免线程竞争</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E4%B8%8E%E6%97%B6%E9%97%B4%E8%BD%AE"><span class="nav-number">4.3.</span> <span class="nav-text">2、定时任务与时间轮</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NioEventLoop%E4%B8%8ENioChannel%E7%B1%BB%E5%85%B3%E7%B3%BB"><span class="nav-number">5.</span> <span class="nav-text">NioEventLoop与NioChannel类关系</span></a></li></ol>
-    </div>
-</div>
-        
-    </aside>
-
-</div>
-
-
-
-    <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-          <span class="search-icon">
-            <i class="fa fa-search"></i>
-          </span>
-            <div class="search-input-container">
-                <input autocomplete="off"
-                       autocorrect="off"
-                       autocapitalize="off"
-                       placeholder="Search..."
-                       spellcheck="false"
-                       type="search"
-                       class="search-input"
-                >
-            </div>
-            <span class="popup-btn-close">
-                <i class="fa fa-times"></i>
-            </span>
+              </article>
+            
+          </article>
         </div>
-        <div id="search-result">
-            <div id="no-result">
-                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-            </div>
-        </div>
+      </div>
     </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
-
-
-<script src="/js/main.js"></script>
-<script src="/js/header-shrink.js"></script>
-<script src="/js/toggle-mode.js"></script>
-
-
-
+      </div>
     
-<script src="/js/scroll-to-top.js"></script>
+  </div>
+</div>
 
+<!-- Custom -->
 
-
-
-
-    
-        
-<script src="/js/code-copy.js"></script>
 
     
 
     
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <span>Copyright @2011-present TJ Powered by:hexo theme by: fluid</span>
+
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
 
 
 </body>
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?c1b31db7a7ea55c71d92dc4a7cea0cc3";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
 </html>
