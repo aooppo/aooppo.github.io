@@ -283,14 +283,13 @@
 </ul>
 </li>
 </ul>
-<h4 id="1-2-3-使用选择器"><a href="#1-2-3-使用选择器" class="headerlink" title="1.2.3 使用选择器"></a>1.2.3 使用选择器</h4><p><strong>selector 的作用就是配合一个线程来管理多个 channel（fileChannel 因为是阻塞式的，所以无法使用 selector）</strong>，获取这些 channel 上发生的<strong>事件</strong>，这些 channel 工作在<strong>非阻塞模式</strong>下，当一个 channel 中没有执行任务时，可以去执行其他 channel 中的任务。<strong>适合连接数多，但流量较少的场景</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619687916440-d1d112ee-d5c7-4b8d-a7fa-f9142011f519.png#align=left&display=inline&height=356&margin=%5Bobject%20Object%5D&originHeight=356&originWidth=592&size=0&status=done&style=none&width=592" srcset="/img/loading.gif" lazyload><br>若事件未就绪，调用 selector 的 select() 方法会阻塞线程，直到 channel 发生了就绪事件。这些事件就绪后，select 方法就会返回这些事件交给 thread 来处理。</p>
+<h4 id="1-2-3-使用选择器"><a href="#1-2-3-使用选择器" class="headerlink" title="1.2.3 使用选择器"></a>1.2.3 使用选择器</h4><p><strong>selector 的作用就是配合一个线程来管理多个 channel（fileChannel 因为是阻塞式的，所以无法使用 selector）</strong>，获取这些 channel 上发生的<strong>事件</strong>，这些 channel 工作在<strong>非阻塞模式</strong>下，当一个 channel 中没有执行任务时，可以去执行其他 channel 中的任务。<strong>适合连接数多，但流量较少的场景</strong><br>**<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619687916440-d1d112ee-d5c7-4b8d-a7fa-f9142011f519.png#align=left&display=inline&height=356&margin=%5Bobject%20Object%5D&originHeight=356&originWidth=592&size=0&status=done&style=none&width=592" srcset="/img/loading.gif" lazyload><br>若事件未就绪，调用 selector 的 select() 方法会阻塞线程，直到 channel 发生了就绪事件。这些事件就绪后，select 方法就会返回这些事件交给 thread 来处理。</p>
 <h4 id="1-2-4-可选择通道-SelectableChannel"><a href="#1-2-4-可选择通道-SelectableChannel" class="headerlink" title="1.2.4 可选择通道(SelectableChannel)"></a>1.2.4 可选择通道(SelectableChannel)</h4><p>并不是所有的 Channel，都是可以被 Selector 复用的。比方说，FileChannel 就不能被选择器复用。为什么呢？<br>判断一个 Channel 能被 Selector 复用，有一个前提：判断他是否继承了一个抽象类 SelectableChannel。如果继承了 SelectableChannel，则可以被复用，否则不能。<br>SelectableChannel 类提供了实现通道的可选择性所需要的公共方法。它是所有支持就绪检查的通道类的父类。所有 socket 通道，都继承了 SelectableChannel 类都是可选择的，包括从管道(Pipe)对象的中获得的通道。而 FileChannel 类，没有继承 SelectableChannel，因此是不是可选通道。<br>通道和选择器注册之后，他们是绑定的关系吗？<br>答案是不是。不是一对一的关系。一个通道可以被注册到多个选择器上，但对每个选择器而言只能被注册一次。<br>通道和选择器之间的关系，使用注册的方式完成。SelectableChannel 可以被注册到 Selector 对象上，在注册的时候，需要指定通道的哪些操作，是 Selector 感兴趣的。</p>
 <h2 id="2-ByteBuffer"><a href="#2-ByteBuffer" class="headerlink" title="2. ByteBuffer"></a>2. ByteBuffer</h2><p>缓冲区(Buffer)就是在内存中预留指定大小的存储空间用来对输入/输出(I/O)的数据作临时存储，这部分预留的内存空间就叫做缓冲区：<br>使用缓冲区有这么两个好处：</p>
 <ul>
 <li>减少实际的物理读写次数</li>
 <li>缓冲区在创建时就被分配内存，这块内存区域一直被重用，可以减少动态分配和回收内存的次数</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/jpeg/12942619/1619710574469-de80a221-347a-4846-a5ea-743c7d30fb30.jpeg" srcset="/img/loading.gif" lazyload>时序图~<br><img src="https://cdn.nlark.com/yuque/__mermaid_v3/08e6f45ca07eea45b678d0f6dd1308b5.svg#lake_card_v2=eyJjb2RlIjoiZ3JhcGggTFJcbiAgICBBW1NxdWFyZSBSZWN0XSAtLSBMaW5rIHRleHQgLS0-IEIoKENpcmNsZSkpXG4gICAgQSAtLT4gQyhSb3VuZCBSZWN0KVxuICAgIEIgLS0-IER7UmhvbWJ1c31cbiAgICBDIC0tPiBEXG4gICAgRCAtLT4gRSIsInR5cGUiOiJtZXJtYWlkIiwibWFyZ2luIjp0cnVlLCJpZCI6Im56NHJEIiwidXJsIjoiaHR0cHM6Ly9jZG4ubmxhcmsuY29tL3l1cXVlL19fbWVybWFpZF92My8wOGU2ZjQ1Y2EwN2VlYTQ1YjY3OGQwZjZkZDEzMDhiNS5zdmciLCJjYXJkIjoiZGlhZ3JhbSJ9" srcset="/img/loading.gif" lazyload></p>
 
             </div>
             <hr>
@@ -331,7 +330,7 @@
                     
                       <a href="/2021/04/29/yq/fgnsl4/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">换了新的风格</span>
+                        <span class="hidden-mobile">NIO</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
