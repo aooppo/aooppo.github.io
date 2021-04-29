@@ -247,12 +247,12 @@
             <div class="markdown-body">
               <h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><p>non-blocking io</p>
 <h2 id="1-三大组件"><a href="#1-三大组件" class="headerlink" title="1. 三大组件"></a>1. 三大组件</h2><h3 id="1-1-Channel-amp-Buffer"><a href="#1-1-Channel-amp-Buffer" class="headerlink" title="1.1 Channel &amp; Buffer"></a>1.1 Channel &amp; Buffer</h3><p>channel 有一点类似于 stream，它就是读写数据的双向通道，可以从 channel 中将数据读入 buffer，也可以将 buffer 的数据写入到 channel 中，而之前的 stream 要么是输入要么是输出，stream 是单向通道，channel 相比较于 stream 更为底层。<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619622568255-fc43f3fd-a36d-4c42-ae62-a846cac4a62c.png#align=left&display=inline&height=69&margin=%5Bobject%20Object%5D&name=image.png&originHeight=138&originWidth=441&size=8533&status=done&style=none&width=221" srcset="/img/loading.gif" lazyload alt="image.png"></p>
-<p>常见的 Channel 有</p>
+<p>常见的<strong>Channel</strong>有</p>
 <ul>
 <li>FileChannel</li>
-<li>DatagramChannel (udp)</li>
-<li>SocketChannel (tcp)</li>
-<li>ServerSocketChannel (tcp)</li>
+<li>DatagramChannel</li>
+<li>SocketChannel</li>
+<li>ServerSocketChannel</li>
 </ul>
 <p>buffer 用来缓冲读写数据，常见的 buffer 有</p>
 <ul>
