@@ -220,7 +220,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.2k 字
+      1.4k 字
     </span>
   
 
@@ -230,7 +230,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      22
+      25
        分钟
     </span>
   
@@ -325,10 +325,12 @@
 <li>position</li>
 <li>limit</li>
 </ul>
-<p><strong>初始化</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619771099797-be2b665d-1e8a-4d8c-9823-d4e8d282901b.png#align=left&display=inline&height=276&margin=%5Bobject%20Object%5D&name=image.png&originHeight=276&originWidth=887&size=17263&status=done&style=none&width=887" srcset="/img/loading.gif" lazyload alt="image.png"><br><strong>写模式，position 是写入位置，limit 等于容量，下图表示写入 4 个字节后的状态</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619771631736-2c01fc81-abc7-4f52-9b6a-c08044350e3d.png#align=left&display=inline&height=263&margin=%5Bobject%20Object%5D&name=image.png&originHeight=263&originWidth=750&size=17339&status=done&style=none&width=750" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h3 id="2-1-ByteBuffer-使用"><a href="#2-1-ByteBuffer-使用" class="headerlink" title="2.1 ByteBuffer 使用"></a>2.1 ByteBuffer 使用</h3><p><strong>初始化</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619771099797-be2b665d-1e8a-4d8c-9823-d4e8d282901b.png#align=left&display=inline&height=276&margin=%5Bobject%20Object%5D&name=image.png&originHeight=276&originWidth=887&size=17263&status=done&style=none&width=887" srcset="/img/loading.gif" lazyload alt="image.png"><br><strong>写模式，position 是写入位置，limit 等于容量，下图表示写入 4 个字节后的状态</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619771631736-2c01fc81-abc7-4f52-9b6a-c08044350e3d.png#align=left&display=inline&height=263&margin=%5Bobject%20Object%5D&name=image.png&originHeight=263&originWidth=750&size=17339&status=done&style=none&width=750" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p><strong>flip 方法调用后，position 切换为读取位置，limit 切换为读取限制</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619771896539-aeaf278b-8773-4bd9-8132-7d4117452d27.png#align=left&display=inline&height=335&margin=%5Bobject%20Object%5D&name=image.png&originHeight=335&originWidth=871&size=19551&status=done&style=none&width=871" srcset="/img/loading.gif" lazyload alt="image.png"><br><strong>读取 4 个字节后，状态如下</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619772480274-55885727-537a-4eb3-8e47-e0c210a9457b.png#align=left&display=inline&height=287&margin=%5Bobject%20Object%5D&name=image.png&originHeight=383&originWidth=1186&size=29673&status=done&style=none&width=890" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <p><strong>clear 方法调用后，状态如下</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619771099797-be2b665d-1e8a-4d8c-9823-d4e8d282901b.png#align=left&display=inline&height=276&margin=%5Bobject%20Object%5D&name=image.png&originHeight=276&originWidth=887&size=17263&status=done&style=none&width=887" srcset="/img/loading.gif" lazyload alt="image.png"><br><strong>compact 方法，是把未读完的部分向前压缩，然后切换至写模式</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619776245817-ac4e8f87-ed9e-459d-b97f-75f447bca394.png#align=left&display=inline&height=320&margin=%5Bobject%20Object%5D&name=image.png&originHeight=639&originWidth=2098&size=113915&status=done&style=none&width=1049" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testBuffer</span><span class="hljs-params">()</span> </span>&#123;<br>     ByteBuffer buffer = ByteBuffer.allocate(<span class="hljs-number">6</span>);<br>     buffer.put((<span class="hljs-keyword">byte</span>) <span class="hljs-number">1</span>);<br>     buffer.put((<span class="hljs-keyword">byte</span>) <span class="hljs-number">2</span>);<br>     buffer.put((<span class="hljs-keyword">byte</span>) <span class="hljs-number">3</span>);<br>     buffer.put((<span class="hljs-keyword">byte</span>) <span class="hljs-number">4</span>);<br>     buffer.put((<span class="hljs-keyword">byte</span>) <span class="hljs-number">5</span>);<br>     buffer.put((<span class="hljs-keyword">byte</span>) <span class="hljs-number">6</span>); <span class="hljs-comment">// 初始化一个写满的buffer</span><br><br>     buffer.flip();<br>     <span class="hljs-comment">// position: 0, limit: 6, capacity: 6  -- 切换为读取模式</span><br><br>     buffer.get();<br>     buffer.get();<br>     <span class="hljs-comment">// position: 2, limit: 6, capacity: 6  -- 读取两个字节后，还剩余四个字节</span><br><br>     buffer.compact();<br>     <span class="hljs-comment">// position: 4, limit: 6, capacity: 6  -- 进行压缩之后将从第五个字节开始</span><br> &#125;<br></code></pre></td></tr></table></figure>
 
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3>
             </div>
             <hr>
             <div>
