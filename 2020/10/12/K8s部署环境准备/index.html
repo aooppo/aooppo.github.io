@@ -352,6 +352,25 @@
                   
                 
                 
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script>
+        console.log('load comment by disqus!');
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          Fluid.utils.createCssLink('https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqusjs.css');
+          Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/disqusjs@1.3.0/dist/disqus.js', function() {
+            new DisqusJS({
+              shortname: 'aooppo',
+              apikey: 'JWfDwbCbdEKT82uWcIFdJz8aJz9iNhA63CNS61ghlvzr2JS5v6zJbSRZfW9RUria'
+            });
+          });
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
 
               </article>
             
@@ -411,7 +430,7 @@
 
   <footer class="text-center mt-5 py-3">
   <div class="footer-content">
-     <span>Copyright @2011-present TJ Powered by:hexo theme by: fluid</span>
+     <span>Copyright @2011-present TJ Powered by:hexo</span>
 
   </div>
   
