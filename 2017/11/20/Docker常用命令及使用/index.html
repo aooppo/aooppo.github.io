@@ -262,12 +262,6 @@
             <!-- SEO header -->
             <h1 style="display: none">Docker常用命令及使用</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：几秒前
-                
-              </p>
-            
             <div class="markdown-body">
               <p>以下是在 centos 系统下执行</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo yum install -y yum-utils device-mapper-persistent-data lvm2<br><br>sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo<br><br>sudo yum makecache fast<br><br>sudo yum install docker-ce<br><br>vi /etc/docker/daemon.json<br><br>&#123;<br>  <span class="hljs-string">&quot;registry-mirrors&quot;</span> : [<br>    <span class="hljs-string">&quot;https://xxxx.mirror.aliyuncs.com&quot;</span><br>  ],<br>  <span class="hljs-string">&quot;insecure-registries&quot;</span> : [<br>    <span class="hljs-string">&quot;registry.mirrors.aliyuncs.com&quot;</span><br>  ],<br>  <span class="hljs-string">&quot;debug&quot;</span> : <span class="hljs-literal">true</span>,<br>  <span class="hljs-string">&quot;experimental&quot;</span> : <span class="hljs-literal">true</span><br>&#125;<br>sudo systemctl start docker<br></code></pre></td></tr></table></figure>

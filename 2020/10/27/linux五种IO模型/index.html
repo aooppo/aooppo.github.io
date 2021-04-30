@@ -262,12 +262,6 @@
             <!-- SEO header -->
             <h1 style="display: none">Linux五种IO模型</h1>
             
-              <p class="note note-info">
-                
-                  本文最后更新于：几秒前
-                
-              </p>
-            
             <div class="markdown-body">
               <p>Linux下主要的IO主要分为：阻塞IO(Blocking IO)，非阻塞IO(Non-blocking IO)，同步IO(Sync IO)和异步IO(Async IO)。<br>同步：调用端会一直等待服务端响应，直到返回结果。<br>异步：调用端发起调用之后不会立刻返回，不会等待服务端响应。服务端通过通知机制或者回调函数来通知客户端。<br>阻塞：服务端返回结果之前，客户端线程会被挂起，此时线程不可被CPU调度，线程暂停运行。<br>非阻塞：在服务端返回前，函数不会阻塞调用端线程，而会立刻返回。<br>同步异步的区别在于：服务端在拷贝数据时是否阻塞调用端线程；阻塞和非阻塞的区别在于：调用端线程在调用function后是否立刻返回。要理解这些I/O，需要先理解一些基本的概念。</p>
 <h2 id="用户态和核心态"><a href="#用户态和核心态" class="headerlink" title="用户态和核心态"></a>用户态和核心态</h2><p>Linux系统中分为核心态(Kernel model)和用户态(User model)，CPU会在两个model之间切换。</p>
