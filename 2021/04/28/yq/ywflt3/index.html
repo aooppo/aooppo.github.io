@@ -220,7 +220,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      1.2k 字
     </span>
   
 
@@ -230,7 +230,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      20
+      21
        分钟
     </span>
   
@@ -264,8 +264,7 @@
             
             <div class="markdown-body">
               <h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><p>non-blocking io</p>
-<h2 id="1-三大组件"><a href="#1-三大组件" class="headerlink" title="1. 三大组件"></a>1. 三大组件</h2><h3 id="1-1-Channel-amp-Buffer"><a href="#1-1-Channel-amp-Buffer" class="headerlink" title="1.1 Channel &amp; Buffer"></a>1.1 Channel &amp; Buffer</h3><p>channel 有一点类似于 stream，它就是读写数据的双向通道，可以从 channel 中将数据读入 buffer，也可以将 buffer 的数据写入到 channel 中，而之前的 stream 要么是输入要么是输出，stream 是单向通道，channel 相比较于 stream 更为底层。<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619622568255-fc43f3fd-a36d-4c42-ae62-a846cac4a62c.png#align=left&display=inline&height=138&margin=%5Bobject%20Object%5D&name=image.png&originHeight=138&originWidth=441&size=8533&status=done&style=none&width=441" srcset="/img/loading.gif" lazyload alt="image.png"></p>
-<p>常见的<strong>Channel</strong>有:</p>
+<h2 id="1-三大组件"><a href="#1-三大组件" class="headerlink" title="1. 三大组件"></a>1. 三大组件</h2><h3 id="1-1-Channel-amp-Buffer"><a href="#1-1-Channel-amp-Buffer" class="headerlink" title="1.1 Channel &amp; Buffer"></a>1.1 Channel &amp; Buffer</h3><p>channel 有一点类似于 stream，它就是读写数据的双向通道，可以从 channel 中将数据读入 buffer，也可以将 buffer 的数据写入到 channel 中，而之前的 stream 要么是输入要么是输出，stream 是单向通道，channel 相比较于 stream 更为底层。<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619622568255-fc43f3fd-a36d-4c42-ae62-a846cac4a62c.png#align=left&display=inline&height=138&margin=%5Bobject%20Object%5D&name=image.png&originHeight=138&originWidth=441&size=8533&status=done&style=none&width=441" srcset="/img/loading.gif" lazyload alt="image.png"><br>常见的<strong>Channel</strong>有:</p>
 <ul>
 <li>FileChannel</li>
 <li>DatagramChannel</li>
@@ -320,6 +319,14 @@
 <li>减少实际的物理读写次数</li>
 <li>缓冲区在创建时就被分配内存，这块内存区域一直被重用，可以减少动态分配和回收内存的次数</li>
 </ul>
+<p>ByteBuffer 有几个重要属性</p>
+<ul>
+<li>capacity</li>
+<li>position</li>
+<li>limit</li>
+</ul>
+<p><strong>初始化</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619771099797-be2b665d-1e8a-4d8c-9823-d4e8d282901b.png#align=left&display=inline&height=207&margin=%5Bobject%20Object%5D&name=image.png&originHeight=276&originWidth=887&size=17263&status=done&style=none&width=665" srcset="/img/loading.gif" lazyload alt="image.png"><br><strong>写模式，position 是写入位置，limit 等于容量，下图表示写入 4 个字节后的状态</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619771631736-2c01fc81-abc7-4f52-9b6a-c08044350e3d.png#align=left&display=inline&height=197&margin=%5Bobject%20Object%5D&name=image.png&originHeight=263&originWidth=750&size=17339&status=done&style=none&width=563" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p><strong>flip 方法调用后，position 切换为读取位置，limit 切换为读取限制</strong><br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1619771896539-aeaf278b-8773-4bd9-8132-7d4117452d27.png#align=left&display=inline&height=251&margin=%5Bobject%20Object%5D&name=image.png&originHeight=335&originWidth=871&size=19551&status=done&style=none&width=653" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 
             </div>
             <hr>
