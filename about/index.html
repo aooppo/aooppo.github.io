@@ -221,7 +221,14 @@
                 
 
 <article class="page-content">
-  <h1 id="About-Me"><a href="#About-Me" class="headerlink" title="About Me"></a>About Me</h1><ul>
+  <head>
+
+  <script src="//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js"></script>
+
+</head>
+# About Me
+
+<ul>
 <li>TJ / 男</li>
 <li>2011 年至今 Java 企业级开发经验</li>
 <li>熟悉基于 Spring-cloud 微服务架构</li>
@@ -236,6 +243,18 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/aooppo">https://github.com/aooppo</a></li>
 </ul>
 <img src="/img/pay.jpg" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:220px; height:220px;">
+
+
+
+<div id="waline" style="margin: 30px;"></div>
+<script>
+new Waline({
+    el: '#waline',
+    path: location.pathname,
+    serverURL: 'https://comments.voox.cc',
+});
+</script>
+
 
   
 </article>

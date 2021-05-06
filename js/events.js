@@ -149,19 +149,27 @@ Fluid.events = {
     }
     // eslint-disable-next-line no-console
     console.log(`
-------------------------------------------------
-|                                              |
-|     ________  __            _        __      |
-|    |_   __  |[  |          (_)      |  ]     |
-|      | |_ \\_| | | __   _   __   .--.| |      |
-|      |  _|    | |[  | | | [  |/ /'\`\\' |      |
-|     _| |_     | | | \\_/ |, | || \\__/  |      |
-|    |_____|   [___]'.__.'_/[___]'.__.;__]     |
-|                                              |
-|           Powered by Hexo x Fluid            |
-|         GitHub: https://git.io/JqpVD         |
-|                                              |
-------------------------------------------------
+                                                                                                    
+                                                                                                    
+                                                                                                    
+                                                                                                    
+    tt                                                                                     
+    tt         tt                         ,,,   ,,,                                        
+    tt,        tt                         ,,,   ,,                                         
+     tt       ttt                          ,,. ,,,                                         
+     tt       tt    jjjjjt      jjjjjj     :,, ,,             jjj     jjj:                 
+      tt     ttt   jjjjjjjj    jjjjjjjj     ,,,,.           jjjjjt  jjjjjj                 
+      tt     tt   jjjj.,jjjj  jjjji,jjjj     ,,,           jjj   t  jj                     
+      tt:   tt    jjj   .jjj  jjj;   jjj     ,,,           jj      jj                      
+       tt   tt   ,jjj    jjj  jjj    jjj    .,,,          ijj      jj                      
+       tt  tt    :jjj    jjj  jjj    jjj    ,,.,,         tjj      jj                      
+       :t;:t      jjj;  jjjj  jjjj  .jjj   ,,, ,,.   jjjj  jj      jj                      
+        tttt      jjjjjjjjjt  jjjjjjjjjj   ,,  ,,,   jjjj  jjt   t :jj                     
+        :tt        jjjjjjjj    jjjjjjjj   ,,,   ,,,  jjjj   jjjjjt  jjjjjj                 
+         tt          jjjj        jjjj    ,,,    ,,,  jjjj    tjjt     jjj                  
+                                                                                           
+                   welcome to voox.cc                                                                        
+                                                                                        
     `);
   }
 };
