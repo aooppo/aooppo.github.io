@@ -257,7 +257,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.8k 字
+      1.9k 字
     </span>
   
 
@@ -267,7 +267,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      33
+      37
        分钟
     </span>
   
@@ -385,10 +385,11 @@
 <blockquote>
 <p>TCP 协议是面向连接的、可靠的、基于字节流的传输层通信协议 TCP 协议是面向连接的、可靠的、基于字节流的传输层通信协议，应用层交给 TCP 协议的数据并不会以消息为单位向目的主机传输，这些数据在某些情况下会被组合成一个数据段发送给目标的主机。</p>
 </blockquote>
-<p>Negal 算法的优化，当应用发送数据包太小，TCP 为了减少网络请求次数的开销，它会等待多个消息包一起，打成一个 TCP 数据包一次发送出去。这也就是所谓的<strong>粘包</strong>。<br>**<br><img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1620396369576-909901fb-afa7-4bd8-8452-853f3819b747.png#align=left&display=inline&height=349&margin=%5Bobject%20Object%5D&name=image.png&originHeight=697&originWidth=1050&size=424442&status=done&style=none&width=525" srcset="/img/loading.gif" lazyload alt="image.png"></p>
+<p>Negal 算法的优化，当应用发送数据包太小，TCP 为了减少网络请求次数的开销，它会等待多个消息包一起，打成一个 TCP 数据包一次发送出去。这也就是所谓的<strong>粘包</strong>。<img src="https://cdn.nlark.com/yuque/0/2021/png/12942619/1620396369576-909901fb-afa7-4bd8-8452-853f3819b747.png#align=left&display=inline&height=349&margin=%5Bobject%20Object%5D&name=image.png&originHeight=697&originWidth=1050&size=424442&status=done&style=none&width=525" srcset="/img/loading.gif" lazyload alt="image.png"></p>
 <blockquote>
 <p>因为 TCP 本身传输的数据包大小就有限制，所以应用发出的消息包过大，TCP 会把应用消息包拆分为多个 TCP 数据包发送出去。</p>
 </blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cc.voox.nio.buffer;<br><br><span class="hljs-keyword">import</span> org.junit.Test;<br><br><span class="hljs-keyword">import</span> java.nio.ByteBuffer;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BufferTest</span> </span>&#123;<br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test1</span><span class="hljs-params">()</span> </span>&#123;<br>        ByteBuffer byteBuffer = ByteBuffer.allocate(<span class="hljs-number">32</span>);<br>        byteBuffer.put(<span class="hljs-string">&quot;hi!\n i&#x27;m TJ\nHo&quot;</span>.getBytes());<br>        split(byteBuffer);<br>        byteBuffer.put(<span class="hljs-string">&quot;w are you?\n&quot;</span>.getBytes());<br>        split(byteBuffer);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">split</span><span class="hljs-params">(ByteBuffer byteBuffer)</span> </span>&#123;<br>        byteBuffer.flip();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; byteBuffer.limit(); i++) &#123;<br><br>            <span class="hljs-keyword">if</span> (<span class="hljs-string">&#x27;\n&#x27;</span> == byteBuffer.get(i)) &#123;<br>                <span class="hljs-keyword">int</span> len = i + <span class="hljs-number">1</span> - byteBuffer.position();<br>                ByteBuffer target = ByteBuffer.allocate(len);<br>                <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; len; j++) &#123;<br>                    target.put(byteBuffer.get());<br>                &#125;<br>                System.out.print(<span class="hljs-keyword">new</span> String(target.array()));<br>            &#125;<br><br>        &#125;<br>        byteBuffer.compact();<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
