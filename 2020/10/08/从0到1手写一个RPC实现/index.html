@@ -380,7 +380,6 @@
   <script type="text/javascript">
     Fluid.utils.loadComments('#waline', function() {
       Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@waline/client@0.15.0/dist/Waline.min.js', function () {
-        console.log('load waline...')
         new Waline({
           el: "#waline",
           placeholder: "说点什么",
@@ -399,10 +398,6 @@
           secureDomains: 'voox.cc',
           disallowIPList: [],
         });
-        setTimeout(() => {
-        var infoEle = document.querySelector('#waline .vpower');
-        infoEle && infoEle.remove();
-      }, 1000);
       });
  
     });
